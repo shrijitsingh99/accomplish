@@ -158,9 +158,9 @@
         
     }
     self.dates = [dates mutableCopy];
-    [self.dates sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dates" ascending:YES]]];
+    [self.dates sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
     [self.tasks addObject:task];
-    [self arrangeByCategory];
+    [self arrangeTasks];
 
     [self.tableView reloadData];
     [self dismissViewControllerAnimated:TRUE completion:nil];
@@ -172,16 +172,16 @@
 -(void)selectedCategory:(ACCategory *)category categories:(NSArray *)categories
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if (self.category != category)
-    {
-        [self arrangeTasks];
-    }
-    self.category = category;
-    [self.selectCategoryButton setTitle:self.category.name forState:UIControlStateNormal];
     if ([self.categories count] != [categories count])
     {
         [self.categories removeAllObjects];
-        [self.categories addObjectsFromArray:categories];
+        self.categories = [categories mutableCopy];
+    }
+    if (self.category != category)
+    {
+        self.category = category;
+        [self.selectCategoryButton setTitle:self.category.name forState:UIControlStateNormal];
+        [self arrangeTasks];
     }
 }
 
@@ -232,11 +232,12 @@
     }
     else
     {
-        self.visibleTasks = [self.tasks mutableCopy];
+    self.visibleTasks = [self.tasks mutableCopy];
     [self arrangeByCategory];
     [self arrangeByPriority];
     [self arrangeByDate];
     [self.tableView reloadData];
+
     }
 }
 
