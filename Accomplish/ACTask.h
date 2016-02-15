@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)saveTasks;
 +(void)removeTasks:(NSArray *)tasks;
 -(void)removeTask;
++(NSMutableArray *)tasks:(NSMutableArray *)tasks ofCategory:(ACCategory *)category;
 
 @end
 

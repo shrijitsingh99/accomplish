@@ -63,4 +63,26 @@
 	[ACCategory saveCategories];
 }
 
++(void)setupCategories
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![userDefaults valueForKey:@"isFirstRun"])
+    {
+        [ACCategory insertCategoryWithName:@"Overview" color:nil serial:0];
+        [ACCategory insertCategoryWithName:@"Inbox" color:nil serial:1];
+        [ACCategory insertCategoryWithName:@"Home" color:nil serial:2];
+        [ACCategory insertCategoryWithName:@"Work" color:nil serial:3];
+        [ACCategory insertCategoryWithName:@"Shopping" color:nil serial:4];
+        [ACCategory saveCategories];
+        [userDefaults setBool:YES forKey:@"isFirstRun"];
+    }
+}
+
++(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byCategory:(ACCategory *)category
+{
+    NSPredicate  *filterByCategory = [NSPredicate predicateWithFormat:@"category.name CONTAINS %@", category.name];
+    NSMutableArray *tasksArrangeByCategory = [[tasks filteredArrayUsingPredicate:filterByCategory] mutableCopy];
+    return tasksArrangeByCategory;
+}
+
 @end

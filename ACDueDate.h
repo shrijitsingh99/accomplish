@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 +(ACDueDate *)insertDueDateWithDate:(NSDate *)date;
 +(void)saveDueDate;
 +(NSArray *)fetchDueDates;
++(NSMutableArray *)arrangeByDueDate:(NSMutableArray *)tasks;
++(NSMutableArray *)arrangeByDueDateIntoSections:(NSMutableArray *)dates;
 
 @end
 

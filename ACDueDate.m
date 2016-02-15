@@ -41,4 +41,20 @@
     return dates;
 }
 
++(NSMutableArray *)arrangeByDueDate:(NSMutableArray *)tasks
+{
+    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueDate.date" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"dueDate.time" ascending:YES]]];
+    return tasks;
+}
+
++(NSMutableArray *)arrangeByDueDateIntoSections:(NSMutableArray *)dates
+{
+    NSMutableArray *taskSortedIntoSections = [[NSMutableArray alloc] init];
+    for (ACDueDate *date in dates)
+    {
+        [taskSortedIntoSections addObject:date.task];
+    }
+    return taskSortedIntoSections;
+}
+
 @end

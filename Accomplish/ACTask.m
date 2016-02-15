@@ -10,6 +10,7 @@
 #import "ACCategory.h"
 #import "ACDueDate.h"
 #import "UIApplication+CoreData.h"
+#import "ACPriority.h"
 
 @implementation ACTask
 
@@ -69,6 +70,13 @@
 	[ACCategory saveCategories];
 }
 
-
++(NSMutableArray *)tasks:(NSMutableArray *)tasks ofCategory:(ACCategory *)category
+{
+    NSMutableArray *sortedTasks = tasks;
+    sortedTasks = [ACCategory arrangeTasks:sortedTasks byCategory:category];
+    sortedTasks = [ACDueDate arrangeByDueDate:sortedTasks];
+    sortedTasks = [ACPriority arrangeByPriority:sortedTasks];
+    return sortedTasks;
+}
 
 @end

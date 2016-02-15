@@ -29,11 +29,12 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [ACCategory setupCategories];
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.estimatedRowHeight = 54.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    [self performFirstRunSetup];
     self.categories = [[ACCategory fetchCategories] mutableCopy];
     self.dates = [[ACDueDate fetchDueDates] mutableCopy];
     self.tasks = [[ACTask fetchTasks] mutableCopy];
@@ -45,21 +46,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-}
-
--(void)performFirstRunSetup
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (![userDefaults valueForKey:@"isFirstRun"])
-    {
-        ACCategory *overview = [ACCategory insertCategoryWithName:@"Overview" color:nil serial:0];
-        ACCategory *inbox = [ACCategory insertCategoryWithName:@"Inbox" color:nil serial:1];
-        ACCategory *home = [ACCategory insertCategoryWithName:@"Home" color:nil serial:2];
-        ACCategory *work = [ACCategory insertCategoryWithName:@"Work" color:nil serial:3];
-        ACCategory *shopping = [ACCategory insertCategoryWithName:@"Shopping" color:nil serial:4];
-        [ACCategory saveCategories];
-        [userDefaults setBool:YES forKey:@"isFirstRun"];
-    }
 }
 
 
@@ -226,45 +212,15 @@
 {
     if ([self.category.name isEqualToString:@"Overview"])
     {
-        [self arrangeIntoSectionsByDate];
-        [self.tableView reloadData];
+        self.visibleTasks = [ACDueDate arrangeByDueDateIntoSections:self.dates];
     }
     else
     {
-    self.visibleTasks = [self.tasks mutableCopy];
-    [self arrangeByCategory];
-    [self arrangeByPriority];
-    [self arrangeByDate];
+        self.visibleTasks = [ACTask tasks:self.tasks ofCategory:self.category];
+    }
     [self.tableView reloadData];
-
-    }
 }
 
--(void)arrangeByCategory
-{
-    NSPredicate  *filterByCategory = [NSPredicate predicateWithFormat:@"category.name CONTAINS %@", self.category.name];
-    self.visibleTasks = [[self.tasks filteredArrayUsingPredicate:filterByCategory] mutableCopy];
-}
-
--(void)arrangeByPriority
-{
-    [self.visibleTasks sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO] ]];
-}
-
--(void)arrangeByDate
-{
-    [self.visibleTasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueDate.date" ascending:YES]]];
-}
-
--(void)arrangeIntoSectionsByDate
-{
-    [self.visibleTasks removeAllObjects];
-    for (ACDueDate *date in self.dates)
-    {
-        NSPredicate *filterByDatePredicate = [NSPredicate predicateWithFormat:@"dueDate.date CONTAINS %@", date.date];
-        [self.visibleTasks addObject:[self.tasks filteredArrayUsingPredicate:filterByDatePredicate]];
-    }
-}
 
 
 #pragma mark Swipe Delegate

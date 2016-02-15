@@ -13,4 +13,6 @@
 
 @property (nonatomic) int number;
 
++(NSMutableArray *)arrangeByPriority:(NSArray *)tasks;
+
 @end

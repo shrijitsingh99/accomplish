@@ -11,4 +11,10 @@
 
 @implementation ACPriority
 
++(NSMutableArray *)arrangeByPriority:(NSMutableArray *)tasks
+{
+    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO]]];
+    return tasks;
+}
+
 @end
