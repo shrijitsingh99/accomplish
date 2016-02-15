@@ -29,7 +29,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.estimatedRowHeight = 54.0;
