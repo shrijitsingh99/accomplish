@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface ACReminder : NSObject
 
 @property (strong, nonatomic) NSDate *date;
@@ -15,7 +16,7 @@
 @property (strong, nonatomic) NSString *dateString;
 @property (nonatomic) BOOL isEnabled;
 
--(id)initWithReminderDate:(NSDate *)aDate;
+-(id)initWithReminderDate:(NSDate *)date;
 +(NSDateFormatter *)dateFormat;
 
 @end

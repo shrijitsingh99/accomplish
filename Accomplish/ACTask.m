@@ -1,42 +1,74 @@
 //
-//  ACTask.m
+//  ACTask.n
 //  Accomplish
 //
-//  Created by Shrijit Singh on 02/10/15.
-//  Copyright © 2015 Shrijit Singh. All rights reserved.
+//  Created by Shrijit Singh on 05/02/16.
+//  Copyright © 2016 Shrijit Singh. All rights reserved.
 //
 
 #import "ACTask.h"
+#import "ACCategory.h"
+#import "ACDueDate.h"
+#import "UIApplication+CoreData.h"
 
 @implementation ACTask
 
--(ACTask *)initWithText:(NSString *)text description:(NSString *)descriptionText category:(ACCategory *)categoryName priority:(int)aPriorityNumber reminderDate:(NSDate *)aReminderDate dueDate:(NSDate *)aDueDate lineCount:(int)numberOfLines
-{
-    self = [super init];
-    
-    if (self) {
-        
-        _text = text;
-        
-        _descriptionText = descriptionText;
-        
-        _category = categoryName;
-        
-        _priority = [[ACPriority alloc] init];
-        _priority.number = aPriorityNumber;
-        
-        _reminderDate = [[ACReminder alloc] initWithReminderDate:aReminderDate];
+@synthesize dateFormatter = _dateFormatter;
 
-        _dueDate = [[ACDueDate alloc] initWithDueDate:aDueDate];
-        
-        _textLineCount = numberOfLines;
-        
-        return self;
-    }
-    
-    NSLog(@"Initialization of task failed");
-    
-    return nil;
++(NSEntityDescription *)entity {
+	return [NSEntityDescription entityForName:@"Task" inManagedObjectContext:[UIApplication applicationManagedObjectContext]];
 }
+
+
++(ACTask *)insertTaskWithName:(NSString *)name details:(NSString *)details serial:(int)serial priority:(int)priority dueDate:(ACDueDate *)dueDate reminderDate:(NSDate *)reminderDate isCompleted:(BOOL)completed intoCategory:(ACCategory *)category
+{
+
+	ACTask *coreDataTask = [SSCoreData insertNewObjectForEntityForName:@"Task"];
+	coreDataTask.name = name;
+	coreDataTask.details = details;
+	coreDataTask.serial = [NSNumber numberWithInt:serial];
+	coreDataTask.priority = [NSNumber numberWithInt:serial];
+	coreDataTask.dueDate = dueDate;
+	coreDataTask.reminderDate = reminderDate;
+	coreDataTask.completed = [NSNumber numberWithBool:completed];
+    coreDataTask.category = category;
+	[ACTask saveTasks];
+	return coreDataTask;
+}
+
++(void)saveTasks {
+	NSError *error = nil;
+	if (![[UIApplication applicationManagedObjectContext] save:&error]) {
+		NSLog(@"Error occured while saving category");
+	}
+
+}
+
++(NSArray *)fetchTasks {
+	NSArray *tasks = [SSCoreData fetchObjectsForEntityForName:@"Task" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"dueDate.date"
+	                                                                                       ascending:NO], [[NSSortDescriptor alloc] initWithKey:@"serial"
+	                                                                                                       ascending:NO]]];
+	return tasks;
+}
+-(void)removeTask {
+	[ACTask removeTasks:@[self]];
+}
+
++(void)removeTasks:(NSArray *)tasks {
+	[SSCoreData removeObjects:tasks];
+	[ACTask saveTasks];
+
+}
+
++(void)changeCategorySequenceforTasks:(NSArray *)tasks {
+	NSArray *fetchedTasks = [ACTask fetchTasks];
+	for (ACCategory *fetchedTask in fetchedTasks) {
+		ACCategory *identicalTask = [tasks objectAtIndex:[tasks indexOfObjectIdenticalTo:fetchedTask]];;
+		fetchedTask.serial= identicalTask.serial;
+	}
+	[ACCategory saveCategories];
+}
+
+
 
 @end

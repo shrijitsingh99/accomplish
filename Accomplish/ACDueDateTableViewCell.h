@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MGSwipeTableCell.h"
 
+
 @interface ACDueDateTableViewCell : MGSwipeTableCell
 
 @property (strong, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *isEnabledLabel;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 
--(void)setupCellWithDueDate:(NSString *)aDateString forEnabledState:(BOOL)isEnabled;
+-(void)setupCellWithDueDate:(NSString *)dateString forEnabledState:(BOOL)isEnabled;
 
 @end

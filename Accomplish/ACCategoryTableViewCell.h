@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface ACCategoryTableViewCell : UITableViewCell
+
 @property (strong, nonatomic) IBOutlet UIImageView *categoryIconImageView;
 @property (strong, nonatomic) IBOutlet UILabel *categoryNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *categoryColorImageView;
 
--(void)setupCellWithCategoryName:(NSString *)aCategoryName categoryImageName:(NSString *)anImageName categoryColor:(UIColor *)aColor;
+-(void)setupCellWithCategoryName:(NSString *)name categoryImage:(NSString *)imageName categoryColor:(UIColor *)color;
 
 @end

@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		890690181BC1A7830062BBF8 /* ACCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 890690171BC1A7830062BBF8 /* ACCategory.m */; };
 		891DCD051BC9305300940F9E /* ACReminderDateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 891DCD041BC9305300940F9E /* ACReminderDateTableViewCell.m */; };
 		891DCD081BC930FD00940F9E /* ACReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 891DCD071BC930FD00940F9E /* ACReminder.m */; };
-		892BB8DF1BFC74A4005F1482 /* MBAutoGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 892BB8DE1BFC74A4005F1482 /* MBAutoGrowingTextView.m */; };
+		892AD6F21C664B0E00CC8253 /* ACTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 892AD6F11C664B0E00CC8253 /* ACTask.m */; };
 		892BB8E21BFC8763005F1482 /* ACCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892BB8E11BFC8763005F1482 /* ACCategoryTableViewCell.m */; };
 		892BB8EF1BFC95CC005F1482 /* ACDueDateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892BB8EE1BFC95CC005F1482 /* ACDueDateTableViewCell.m */; };
 		8930F0381BBE695300F2EEEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F0371BBE695300F2EEEC /* main.m */; };
@@ -22,18 +21,25 @@
 		8930F0541BBE695300F2EEEC /* AccomplishTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F0531BBE695300F2EEEC /* AccomplishTests.m */; };
 		8930F05F1BBE695300F2EEEC /* AccomplishUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F05E1BBE695300F2EEEC /* AccomplishUITests.m */; };
 		8930F06E1BBE698900F2EEEC /* ACViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F06D1BBE698900F2EEEC /* ACViewController.m */; };
-		8930F0711BBE6F8600F2EEEC /* ACTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F0701BBE6F8600F2EEEC /* ACTask.m */; };
 		8930F0741BBE735D00F2EEEC /* ACAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F0731BBE735D00F2EEEC /* ACAddTaskViewController.m */; };
+		8949F8B21C70D95300DD02B7 /* ACTask+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8B11C70D95300DD02B7 /* ACTask+CoreDataProperties.m */; };
+		8949F8B81C70D98600DD02B7 /* ACDueDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8B61C70D98600DD02B7 /* ACDueDate.m */; };
+		8949F8C21C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8C11C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m */; };
+		8949F8C51C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8C41C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m */; };
+		8949F8CF1C71B87600DD02B7 /* UIApplication+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8CD1C71B87600DD02B7 /* UIApplication+CoreData.m */; };
+		894E72951C4758580089CA0E /* BVReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894E72941C4758580089CA0E /* BVReorderTableView.m */; };
 		894F45831BCEB98F00B5DB96 /* ACTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 894F45821BCEB98F00B5DB96 /* ACTableViewCell.m */; };
 		89595A3A1BBFAA2F006C2331 /* ACSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89595A391BBFAA2F006C2331 /* ACSelectCategoryViewController.m */; };
 		89600BD91BC2EF9200973E5C /* ACPriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 89600BD81BC2EF9200973E5C /* ACPriority.m */; };
-		896C3F0B1BCC143C00620440 /* ACSelectCategoryToSortViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896C3F0A1BCC143C00620440 /* ACSelectCategoryToSortViewController.m */; };
+		896FC6471C6481290045A7A2 /* SSCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 896FC6461C6481290045A7A2 /* SSCoreData.m */; };
 		89AA95A91BF32B4A006CEE2F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA95A61BF32B4A006CEE2F /* MGSwipeButton.m */; };
 		89AA95AA1BF32B4A006CEE2F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA95A81BF32B4A006CEE2F /* MGSwipeTableCell.m */; };
 		89AD99BB1BBFC53100FBACE5 /* ACAddCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AD99BA1BBFC53100FBACE5 /* ACAddCategoryViewController.m */; };
 		89C99CF11BC838F20079C60A /* ACPriorityPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C99CF01BC838F20079C60A /* ACPriorityPickerTableViewCell.m */; };
-		89E19B791C00BD5E005E457B /* ACDueDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E19B781C00BD5E005E457B /* ACDueDate.m */; };
+		89E566811C6CE5B30023D60C /* UIColor+FlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E566801C6CE5B30023D60C /* UIColor+FlatColors.m */; };
+		89E566841C6D1FF30023D60C /* MBAutoGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E566821C6D1FF30023D60C /* MBAutoGrowingTextView.m */; };
 		89F1900D1C0F80AF0026719B /* ACDueDatePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F1900C1C0F80AF0026719B /* ACDueDatePickerCell.m */; };
+		89FD79D91C2868A8005AD0D5 /* ACCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FD79D71C2868A8005AD0D5 /* ACCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,14 +60,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		890690161BC1A7830062BBF8 /* ACCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCategory.h; sourceTree = "<group>"; };
-		890690171BC1A7830062BBF8 /* ACCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCategory.m; sourceTree = "<group>"; };
 		891DCD031BC9305300940F9E /* ACReminderDateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACReminderDateTableViewCell.h; sourceTree = "<group>"; };
 		891DCD041BC9305300940F9E /* ACReminderDateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACReminderDateTableViewCell.m; sourceTree = "<group>"; };
 		891DCD061BC930FD00940F9E /* ACReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACReminder.h; sourceTree = "<group>"; };
 		891DCD071BC930FD00940F9E /* ACReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACReminder.m; sourceTree = "<group>"; };
-		892BB8DD1BFC74A4005F1482 /* MBAutoGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAutoGrowingTextView.h; sourceTree = "<group>"; };
-		892BB8DE1BFC74A4005F1482 /* MBAutoGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBAutoGrowingTextView.m; sourceTree = "<group>"; };
+		892AD6F01C664B0800CC8253 /* ACTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACTask.h; sourceTree = "<group>"; };
+		892AD6F11C664B0E00CC8253 /* ACTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACTask.m; sourceTree = "<group>"; };
 		892BB8E01BFC8763005F1482 /* ACCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCategoryTableViewCell.h; sourceTree = "<group>"; };
 		892BB8E11BFC8763005F1482 /* ACCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCategoryTableViewCell.m; sourceTree = "<group>"; };
 		892BB8ED1BFC95CC005F1482 /* ACDueDateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACDueDateTableViewCell.h; sourceTree = "<group>"; };
@@ -82,19 +86,29 @@
 		8930F05E1BBE695300F2EEEC /* AccomplishUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccomplishUITests.m; sourceTree = "<group>"; };
 		8930F0601BBE695300F2EEEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8930F06C1BBE698900F2EEEC /* ACViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACViewController.h; sourceTree = "<group>"; };
-		8930F06D1BBE698900F2EEEC /* ACViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACViewController.m; sourceTree = "<group>"; };
-		8930F06F1BBE6F8600F2EEEC /* ACTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACTask.h; sourceTree = "<group>"; };
-		8930F0701BBE6F8600F2EEEC /* ACTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACTask.m; sourceTree = "<group>"; };
+		8930F06D1BBE698900F2EEEC /* ACViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACViewController.m; sourceTree = "<group>"; usesTabs = 0; };
 		8930F0721BBE735D00F2EEEC /* ACAddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAddTaskViewController.h; sourceTree = "<group>"; };
 		8930F0731BBE735D00F2EEEC /* ACAddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAddTaskViewController.m; sourceTree = "<group>"; };
+		8949F8B01C70D95300DD02B7 /* ACTask+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ACTask+CoreDataProperties.h"; path = "../ACTask+CoreDataProperties.h"; sourceTree = "<group>"; };
+		8949F8B11C70D95300DD02B7 /* ACTask+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACTask+CoreDataProperties.m"; path = "../ACTask+CoreDataProperties.m"; sourceTree = "<group>"; };
+		8949F8B51C70D98600DD02B7 /* ACDueDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACDueDate.h; path = ../ACDueDate.h; sourceTree = "<group>"; };
+		8949F8B61C70D98600DD02B7 /* ACDueDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACDueDate.m; path = ../ACDueDate.m; sourceTree = "<group>"; };
+		8949F8C01C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ACDueDate+CoreDataProperties.h"; path = "../ACDueDate+CoreDataProperties.h"; sourceTree = "<group>"; };
+		8949F8C11C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACDueDate+CoreDataProperties.m"; path = "../ACDueDate+CoreDataProperties.m"; sourceTree = "<group>"; };
+		8949F8C31C70FF8200DD02B7 /* ACCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ACCategory+CoreDataProperties.h"; path = "../ACCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
+		8949F8C41C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACCategory+CoreDataProperties.m"; path = "../ACCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
+		8949F8CD1C71B87600DD02B7 /* UIApplication+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+CoreData.m"; sourceTree = "<group>"; };
+		8949F8CE1C71B87600DD02B7 /* UIApplication+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+CoreData.h"; sourceTree = "<group>"; };
+		894E72931C4758580089CA0E /* BVReorderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVReorderTableView.h; sourceTree = "<group>"; };
+		894E72941C4758580089CA0E /* BVReorderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVReorderTableView.m; sourceTree = "<group>"; };
 		894F45811BCEB98F00B5DB96 /* ACTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACTableViewCell.h; sourceTree = "<group>"; };
 		894F45821BCEB98F00B5DB96 /* ACTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACTableViewCell.m; sourceTree = "<group>"; };
 		89595A381BBFAA2F006C2331 /* ACSelectCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACSelectCategoryViewController.h; sourceTree = "<group>"; };
 		89595A391BBFAA2F006C2331 /* ACSelectCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSelectCategoryViewController.m; sourceTree = "<group>"; };
 		89600BD71BC2EF9200973E5C /* ACPriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPriority.h; sourceTree = "<group>"; };
 		89600BD81BC2EF9200973E5C /* ACPriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPriority.m; sourceTree = "<group>"; };
-		896C3F091BCC143C00620440 /* ACSelectCategoryToSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACSelectCategoryToSortViewController.h; sourceTree = "<group>"; };
-		896C3F0A1BCC143C00620440 /* ACSelectCategoryToSortViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSelectCategoryToSortViewController.m; sourceTree = "<group>"; };
+		896FC6451C6481290045A7A2 /* SSCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCoreData.h; sourceTree = "<group>"; };
+		896FC6461C6481290045A7A2 /* SSCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCoreData.m; sourceTree = "<group>"; };
 		89AA95A51BF32B4A006CEE2F /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
 		89AA95A61BF32B4A006CEE2F /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
 		89AA95A71BF32B4A006CEE2F /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
@@ -103,10 +117,14 @@
 		89AD99BA1BBFC53100FBACE5 /* ACAddCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAddCategoryViewController.m; sourceTree = "<group>"; };
 		89C99CEF1BC838F20079C60A /* ACPriorityPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPriorityPickerTableViewCell.h; sourceTree = "<group>"; };
 		89C99CF01BC838F20079C60A /* ACPriorityPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPriorityPickerTableViewCell.m; sourceTree = "<group>"; };
-		89E19B771C00BD5E005E457B /* ACDueDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACDueDate.h; sourceTree = "<group>"; };
-		89E19B781C00BD5E005E457B /* ACDueDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACDueDate.m; sourceTree = "<group>"; };
+		89E5667F1C6CE5B30023D60C /* UIColor+FlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatColors.h"; sourceTree = "<group>"; };
+		89E566801C6CE5B30023D60C /* UIColor+FlatColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatColors.m"; sourceTree = "<group>"; };
+		89E566821C6D1FF30023D60C /* MBAutoGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBAutoGrowingTextView.m; sourceTree = "<group>"; };
+		89E566831C6D1FF30023D60C /* MBAutoGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAutoGrowingTextView.h; sourceTree = "<group>"; };
 		89F1900B1C0F80AF0026719B /* ACDueDatePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACDueDatePickerCell.h; sourceTree = "<group>"; };
 		89F1900C1C0F80AF0026719B /* ACDueDatePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACDueDatePickerCell.m; sourceTree = "<group>"; };
+		89FD79D61C2868A8005AD0D5 /* ACCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACCategory.h; path = ../ACCategory.h; sourceTree = "<group>"; };
+		89FD79D71C2868A8005AD0D5 /* ACCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACCategory.m; path = ../ACCategory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,17 +152,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		890FD9AE1C2C76B800B67D67 /* ACCategory */ = {
+			isa = PBXGroup;
+			children = (
+				8949F8C31C70FF8200DD02B7 /* ACCategory+CoreDataProperties.h */,
+				8949F8C41C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m */,
+				89FD79D61C2868A8005AD0D5 /* ACCategory.h */,
+				89FD79D71C2868A8005AD0D5 /* ACCategory.m */,
+			);
+			name = ACCategory;
+			sourceTree = "<group>";
+		};
 		891DCD091BC94A1800940F9E /* Task Properties */ = {
 			isa = PBXGroup;
 			children = (
-				89E19B771C00BD5E005E457B /* ACDueDate.h */,
-				89E19B781C00BD5E005E457B /* ACDueDate.m */,
-				891DCD061BC930FD00940F9E /* ACReminder.h */,
-				891DCD071BC930FD00940F9E /* ACReminder.m */,
-				890690161BC1A7830062BBF8 /* ACCategory.h */,
-				890690171BC1A7830062BBF8 /* ACCategory.m */,
-				89600BD71BC2EF9200973E5C /* ACPriority.h */,
-				89600BD81BC2EF9200973E5C /* ACPriority.m */,
+				890FD9AE1C2C76B800B67D67 /* ACCategory */,
+				8949F8B91C70D99D00DD02B7 /* ACDueDate */,
+				8949F8C61C71B6BE00DD02B7 /* ACReminder */,
+				8949F8C71C71B6CB00DD02B7 /* ACPriority */,
 			);
 			name = "Task Properties";
 			sourceTree = "<group>";
@@ -171,8 +196,11 @@
 		891DCD0B1BC94A7100940F9E /* Task */ = {
 			isa = PBXGroup;
 			children = (
-				8930F06F1BBE6F8600F2EEEC /* ACTask.h */,
-				8930F0701BBE6F8600F2EEEC /* ACTask.m */,
+				891DCD091BC94A1800940F9E /* Task Properties */,
+				8949F8B01C70D95300DD02B7 /* ACTask+CoreDataProperties.h */,
+				8949F8B11C70D95300DD02B7 /* ACTask+CoreDataProperties.m */,
+				892AD6F01C664B0800CC8253 /* ACTask.h */,
+				892AD6F11C664B0E00CC8253 /* ACTask.m */,
 			);
 			name = Task;
 			sourceTree = "<group>";
@@ -182,8 +210,6 @@
 			children = (
 				8930F06C1BBE698900F2EEEC /* ACViewController.h */,
 				8930F06D1BBE698900F2EEEC /* ACViewController.m */,
-				896C3F091BCC143C00620440 /* ACSelectCategoryToSortViewController.h */,
-				896C3F0A1BCC143C00620440 /* ACSelectCategoryToSortViewController.m */,
 				8930F0721BBE735D00F2EEEC /* ACAddTaskViewController.h */,
 				8930F0731BBE735D00F2EEEC /* ACAddTaskViewController.m */,
 				89595A381BBFAA2F006C2331 /* ACSelectCategoryViewController.h */,
@@ -197,8 +223,6 @@
 		891DCD0D1BC94A9600940F9E /* App Delegation */ = {
 			isa = PBXGroup;
 			children = (
-				892BB8DD1BFC74A4005F1482 /* MBAutoGrowingTextView.h */,
-				892BB8DE1BFC74A4005F1482 /* MBAutoGrowingTextView.m */,
 				8930F0391BBE695300F2EEEC /* AppDelegate.h */,
 				8930F03A1BBE695300F2EEEC /* AppDelegate.m */,
 			);
@@ -228,16 +252,13 @@
 		8930F0351BBE695300F2EEEC /* Accomplish */ = {
 			isa = PBXGroup;
 			children = (
-				891DCD0D1BC94A9600940F9E /* App Delegation */,
 				8930F03F1BBE695300F2EEEC /* Main.storyboard */,
-				89AA95A51BF32B4A006CEE2F /* MGSwipeButton.h */,
-				89AA95A61BF32B4A006CEE2F /* MGSwipeButton.m */,
-				89AA95A71BF32B4A006CEE2F /* MGSwipeTableCell.h */,
-				89AA95A81BF32B4A006CEE2F /* MGSwipeTableCell.m */,
 				891DCD0C1BC94A8A00940F9E /* View Controllers */,
 				891DCD0B1BC94A7100940F9E /* Task */,
-				891DCD091BC94A1800940F9E /* Task Properties */,
+				8949F8D01C71B88000DD02B7 /* Core Data */,
 				891DCD0A1BC94A4D00940F9E /* Table Cells */,
+				8949F8CB1C71B78900DD02B7 /* External Dependencies */,
+				891DCD0D1BC94A9600940F9E /* App Delegation */,
 				8930F0451BBE695300F2EEEC /* Assets.xcassets */,
 				8930F0471BBE695300F2EEEC /* LaunchScreen.storyboard */,
 				8930F04A1BBE695300F2EEEC /* Info.plist */,
@@ -273,6 +294,95 @@
 			path = AccomplishUITests;
 			sourceTree = "<group>";
 		};
+		8949F8B91C70D99D00DD02B7 /* ACDueDate */ = {
+			isa = PBXGroup;
+			children = (
+				8949F8C01C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.h */,
+				8949F8C11C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m */,
+				8949F8B51C70D98600DD02B7 /* ACDueDate.h */,
+				8949F8B61C70D98600DD02B7 /* ACDueDate.m */,
+			);
+			name = ACDueDate;
+			sourceTree = "<group>";
+		};
+		8949F8C61C71B6BE00DD02B7 /* ACReminder */ = {
+			isa = PBXGroup;
+			children = (
+				891DCD061BC930FD00940F9E /* ACReminder.h */,
+				891DCD071BC930FD00940F9E /* ACReminder.m */,
+			);
+			name = ACReminder;
+			sourceTree = "<group>";
+		};
+		8949F8C71C71B6CB00DD02B7 /* ACPriority */ = {
+			isa = PBXGroup;
+			children = (
+				89600BD71BC2EF9200973E5C /* ACPriority.h */,
+				89600BD81BC2EF9200973E5C /* ACPriority.m */,
+			);
+			name = ACPriority;
+			sourceTree = "<group>";
+		};
+		8949F8C81C71B74200DD02B7 /* MGSwipeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				89AA95A51BF32B4A006CEE2F /* MGSwipeButton.h */,
+				89AA95A61BF32B4A006CEE2F /* MGSwipeButton.m */,
+				89AA95A71BF32B4A006CEE2F /* MGSwipeTableCell.h */,
+				89AA95A81BF32B4A006CEE2F /* MGSwipeTableCell.m */,
+			);
+			name = MGSwipeTableViewCell;
+			sourceTree = "<group>";
+		};
+		8949F8C91C71B76A00DD02B7 /* MBAutoGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				89E566831C6D1FF30023D60C /* MBAutoGrowingTextView.h */,
+				89E566821C6D1FF30023D60C /* MBAutoGrowingTextView.m */,
+			);
+			name = MBAutoGrowingTextView;
+			sourceTree = "<group>";
+		};
+		8949F8CA1C71B77E00DD02B7 /* BVReorderTableView */ = {
+			isa = PBXGroup;
+			children = (
+				894E72931C4758580089CA0E /* BVReorderTableView.h */,
+				894E72941C4758580089CA0E /* BVReorderTableView.m */,
+			);
+			name = BVReorderTableView;
+			sourceTree = "<group>";
+		};
+		8949F8CB1C71B78900DD02B7 /* External Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				8949F8CA1C71B77E00DD02B7 /* BVReorderTableView */,
+				8949F8CC1C71B7B900DD02B7 /* Flat Colors */,
+				8949F8C91C71B76A00DD02B7 /* MBAutoGrowingTextView */,
+				8949F8C81C71B74200DD02B7 /* MGSwipeTableViewCell */,
+			);
+			name = "External Dependencies";
+			sourceTree = "<group>";
+		};
+		8949F8CC1C71B7B900DD02B7 /* Flat Colors */ = {
+			isa = PBXGroup;
+			children = (
+				89E5667F1C6CE5B30023D60C /* UIColor+FlatColors.h */,
+				89E566801C6CE5B30023D60C /* UIColor+FlatColors.m */,
+			);
+			name = "Flat Colors";
+			sourceTree = "<group>";
+		};
+		8949F8D01C71B88000DD02B7 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				8949F8CD1C71B87600DD02B7 /* UIApplication+CoreData.m */,
+				8949F8CE1C71B87600DD02B7 /* UIApplication+CoreData.h */,
+				896FC6451C6481290045A7A2 /* SSCoreData.h */,
+				896FC6461C6481290045A7A2 /* SSCoreData.m */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -283,6 +393,7 @@
 				8930F02F1BBE695300F2EEEC /* Sources */,
 				8930F0301BBE695300F2EEEC /* Frameworks */,
 				8930F0311BBE695300F2EEEC /* Resources */,
+				OBJCLEANCUSTOMRUNSCRIPTT /* Objective-Clean Run Script */,
 			);
 			buildRules = (
 			);
@@ -401,32 +512,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		OBJCLEANCUSTOMRUNSCRIPTT /* Objective-Clean Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Objective-Clean Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then \n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}\" \nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\" \nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8930F02F1BBE695300F2EEEC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8930F06E1BBE698900F2EEEC /* ACViewController.m in Sources */,
+				89E566841C6D1FF30023D60C /* MBAutoGrowingTextView.m in Sources */,
+				8949F8C51C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m in Sources */,
 				8930F03B1BBE695300F2EEEC /* AppDelegate.m in Sources */,
-				89E19B791C00BD5E005E457B /* ACDueDate.m in Sources */,
 				89AA95A91BF32B4A006CEE2F /* MGSwipeButton.m in Sources */,
+				894E72951C4758580089CA0E /* BVReorderTableView.m in Sources */,
 				89AD99BB1BBFC53100FBACE5 /* ACAddCategoryViewController.m in Sources */,
 				894F45831BCEB98F00B5DB96 /* ACTableViewCell.m in Sources */,
-				890690181BC1A7830062BBF8 /* ACCategory.m in Sources */,
+				896FC6471C6481290045A7A2 /* SSCoreData.m in Sources */,
 				89595A3A1BBFAA2F006C2331 /* ACSelectCategoryViewController.m in Sources */,
 				891DCD051BC9305300940F9E /* ACReminderDateTableViewCell.m in Sources */,
-				8930F0711BBE6F8600F2EEEC /* ACTask.m in Sources */,
-				896C3F0B1BCC143C00620440 /* ACSelectCategoryToSortViewController.m in Sources */,
+				8949F8B81C70D98600DD02B7 /* ACDueDate.m in Sources */,
+				89FD79D91C2868A8005AD0D5 /* ACCategory.m in Sources */,
 				89C99CF11BC838F20079C60A /* ACPriorityPickerTableViewCell.m in Sources */,
 				892BB8E21BFC8763005F1482 /* ACCategoryTableViewCell.m in Sources */,
+				8949F8CF1C71B87600DD02B7 /* UIApplication+CoreData.m in Sources */,
+				892AD6F21C664B0E00CC8253 /* ACTask.m in Sources */,
+				8949F8C21C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m in Sources */,
 				892BB8EF1BFC95CC005F1482 /* ACDueDateTableViewCell.m in Sources */,
 				8930F0741BBE735D00F2EEEC /* ACAddTaskViewController.m in Sources */,
 				8930F0441BBE695300F2EEEC /* Accomplish.xcdatamodeld in Sources */,
-				892BB8DF1BFC74A4005F1482 /* MBAutoGrowingTextView.m in Sources */,
+				89E566811C6CE5B30023D60C /* UIColor+FlatColors.m in Sources */,
 				89600BD91BC2EF9200973E5C /* ACPriority.m in Sources */,
 				89F1900D1C0F80AF0026719B /* ACDueDatePickerCell.m in Sources */,
 				891DCD081BC930FD00940F9E /* ACReminder.m in Sources */,
 				89AA95AA1BF32B4A006CEE2F /* MGSwipeTableCell.m in Sources */,
+				8949F8B21C70D95300DD02B7 /* ACTask+CoreDataProperties.m in Sources */,
 				8930F0381BBE695300F2EEEC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +642,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",

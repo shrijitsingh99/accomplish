@@ -12,29 +12,22 @@
 @protocol ACAddCategoryViewControllerDelegate <NSObject>
 
 @required
-
 -(void)categoryAddingCancelled;
 -(void)categoryAdded:(ACCategory *)category;
 
 @end
 
+
 @interface ACAddCategoryViewController : UIViewController
 
 @property (weak, nonatomic) id <ACAddCategoryViewControllerDelegate> delegate;
 
-@property (strong, nonatomic) IBOutlet UITextField *categoryNameTextField;
+@property (strong, nonatomic) IBOutlet UIButton *doneBarButtonItem;
+@property (strong, nonatomic) IBOutlet UITextView *categoryNameTextView;
+@property (strong, nonatomic) IBOutlet UIScrollView *colorPickerScrollView;
+@property (nonatomic) int serialForCategoryToBeAdded;
 
-- (IBAction)yellowColorButton:(UIButton *)sender;
-- (IBAction)orangeColorButton:(UIButton *)sender;
-- (IBAction)redColorButton:(UIButton *)sender;
-- (IBAction)purpleColorButton:(UIButton *)sender;
-- (IBAction)greenColorButton:(UIButton *)sender;
-- (IBAction)pinkColorButton:(UIButton *)sender;
-- (IBAction)cyanColorButton:(UIButton *)sender;
-- (IBAction)blueColorButton:(UIButton *)sender;
-
-
-- (IBAction)didPresCancel:(UIButton *)sender;
-- (IBAction)didPressAdd:(UIButton *)sender;
+-(IBAction)didPresCancel:(UIButton *)sender;
+-(IBAction)didPressAdd:(UIButton *)sender;
 
 @end

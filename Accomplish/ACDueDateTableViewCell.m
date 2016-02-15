@@ -8,26 +8,25 @@
 
 #import "ACDueDateTableViewCell.h"
 
+
 @implementation ACDueDateTableViewCell
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+-(void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:NO animated:animated];
-    
+	[super setSelected:NO animated:animated];
 }
 
--(void)setupCellWithDueDate:(NSString *)aDateString forEnabledState:(BOOL)isEnabled
+-(void)setupCellWithDueDate:(NSString *)dateString forEnabledState:(BOOL)isEnabled
 {
-    _dueDateLabel.text = aDateString;
-    if (isEnabled) {
-        _isEnabledLabel.backgroundColor = [UIColor whiteColor];
-
-    }
-    else{
-        _isEnabledLabel.backgroundColor = [UIColor clearColor];
-
-    }
-    
+	_dueDateLabel.text = dateString;
+	if (isEnabled)
+    {
+		_isEnabledLabel.backgroundColor = [UIColor whiteColor];
+	}
+	else
+    {
+		_isEnabledLabel.backgroundColor = [UIColor clearColor];
+	}
 }
 
 @end

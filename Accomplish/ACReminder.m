@@ -8,33 +8,32 @@
 
 #import "ACReminder.h"
 
+
 @implementation ACReminder
 
--(id)initWithReminderDate:(NSDate *)aDate
+-(id)initWithReminderDate:(NSDate *)date
 {
-    self = [super init];
-    
-    _date = aDate;
-    if (aDate == nil)
-    {
-        _dateString = @"";
-        _isEnabled = NO;
-    }
-    else
-    {
-        _dateString = [[ACReminder dateFormat] stringFromDate:aDate];
-        _isEnabled = YES;
-    }
-    
-    return self;
+	self = [super init];
+
+	_date = date;
+	if (date == nil)
+	{
+		_dateString = @"";
+		_isEnabled = NO;
+	}
+	else
+	{
+		_dateString = [[ACReminder dateFormat] stringFromDate:date];
+		_isEnabled = YES;
+	}
+	return self;
 }
 
 +(NSDateFormatter *)dateFormat
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMM dd, hh:mm a"];
-    
-    return dateFormatter;
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"MMM dd, hh:mm a"];
+	return dateFormatter;
 }
 
 @end

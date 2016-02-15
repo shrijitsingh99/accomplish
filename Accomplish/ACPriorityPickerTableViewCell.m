@@ -8,17 +8,18 @@
 
 #import "ACPriorityPickerTableViewCell.h"
 
+
 @implementation ACPriorityPickerTableViewCell
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+-(void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:NO animated:animated];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+	[super setSelected:NO animated:animated];
+	self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 -(void)setupCellWithPriority:(int)aPriorityNumber
 {
-    _priorityPicker.selectedSegmentIndex = aPriorityNumber;
+	_priorityPicker.selectedSegmentIndex = aPriorityNumber;
 }
 
 @end

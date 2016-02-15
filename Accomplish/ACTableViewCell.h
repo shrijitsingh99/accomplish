@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MGSwipeTableCell.h"
 
+
 @interface ACTableViewCell : MGSwipeTableCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *categoryColor;

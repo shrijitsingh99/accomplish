@@ -7,116 +7,110 @@
 //
 
 #import "ACAddCategoryViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UIColor+FlatColors.h"
 
-@interface ACAddCategoryViewController ()
 
+@interface ACAddCategoryViewController () <UITextViewDelegate>
+
+@property (strong, nonatomic) NSArray *colors;
 @property (strong, nonatomic) UIColor *colorSelected;
-@property (strong, nonatomic) NSMutableArray *buttonSelectedArray;
+@property (strong, nonatomic) UIButton *buttonSelected;
 
 @end
 
+
 @implementation ACAddCategoryViewController
 
--(id)colorSelected
+-(void)viewDidLoad
 {
-    if (!_colorSelected) _colorSelected = [[UIColor alloc] init];
-    return _colorSelected;
-}
-
--(id)buttonSelectedArray
-{
-    if (!_buttonSelectedArray) _buttonSelectedArray = [[NSMutableArray alloc] init];
-    return _buttonSelectedArray;
-}
-
-- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UIButton *button = [[UIButton alloc] init];
-    [self.buttonSelectedArray addObject:button];
+        self.categoryNameTextView.text = @"Category Name";
+        self.categoryNameTextView.textColor = [UIColor flatSilverColor];
+        self.categoryNameTextView.delegate = self;
+    self.categoryNameTextView.textContainerInset = UIEdgeInsetsMake(12, 10, 0, 0);
+    [self showColorPicker];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (IBAction)yellowColorButton:(UIButton *)sender
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    self.colorSelected =[UIColor yellowColor];
-    [self selectButton:sender];
+    self.categoryNameTextView.text = @"";
+    self.categoryNameTextView.textColor = [UIColor whiteColor];
+    return YES;
 }
 
-- (IBAction)orangeColorButton:(UIButton *)sender
+-(void)textViewDidChange:(UITextView *)textView
 {
-    self.colorSelected =[UIColor orangeColor];
-    [self selectButton:sender];
+    if (self.categoryNameTextView.text.length == 0)
+    {
+        self.categoryNameTextView.textColor = [UIColor flatSilverColor];
+        self.categoryNameTextView.text = @"Category Name";
+        [self.categoryNameTextView resignFirstResponder];
+    }
 }
 
-- (IBAction)redColorButton:(UIButton *)sender
+-(void)showColorPicker
 {
-    self.colorSelected =[UIColor redColor];
-    [self selectButton:sender];
+    self.colors = [UIColor fetchFlatColors];
+    self.colorSelected = self.colors[0];
+    self.colorPickerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 145, 600, 40)];
+    self.colorPickerScrollView.backgroundColor = [UIColor darkGrayColor];
+    self.colorPickerScrollView.showsHorizontalScrollIndicator = NO;
+    int x = 5;
+    for (int count = 0; count < [self.colors count]; count++)
+    {
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(x, 5, 30, 30)];
+        [button addTarget:self action:@selector(didSelectColor:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = self.colors[count];
+        button.layer.cornerRadius = 15;
+        button.tag = count;
+        [self.colorPickerScrollView addSubview:button];
+        x = x + button.frame.size.width + 12;
+    }
+    self.colorPickerScrollView.contentSize = CGSizeMake(x + 8, 0);
+    self.colorPickerScrollView.bounces = NO;
+    [self.view addSubview:self.colorPickerScrollView];
 }
 
-- (IBAction)purpleColorButton:(UIButton *)sender
+-(void)didSelectColor:(UIButton *)sender
 {
-    self.colorSelected =[UIColor purpleColor];
-    [self selectButton:sender];
+    [[self.buttonSelected viewWithTag:-1] removeFromSuperview];
+    self.buttonSelected.selected = NO;
+    if (sender.tag != -1)
+    {
+    self.colorSelected = self.colors[sender.tag];
+    self.buttonSelected = sender;
+    UIButton *selectedOverlay = [[UIButton alloc] initWithFrame:sender.bounds];
+    sender.selected = YES;
+    selectedOverlay.tag = -1;
+    selectedOverlay.backgroundColor = [UIColor blackColor];
+    selectedOverlay.layer.opacity = 0.7;
+    selectedOverlay.layer.cornerRadius = 14.6;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(((selectedOverlay.frame.size.width / 2) - 6), ((selectedOverlay.frame.size.height / 2) - 6), 12, 12)];
+    imageView.image = [UIImage imageNamed:@"checkedIcon"];
+    [selectedOverlay addTarget:self action:@selector(didSelectColor:) forControlEvents:UIControlEventTouchUpInside];
+    [selectedOverlay addSubview:imageView];
+    [sender addSubview:selectedOverlay];
+    }
 }
 
-- (IBAction)greenColorButton:(UIButton *)sender
+-(IBAction)didPresCancel:(UIButton *)sender
 {
-    self.colorSelected =[UIColor greenColor];
-    [self selectButton:sender];
-}
-
-- (IBAction)pinkColorButton:(UIButton *)sender
-{
-    self.colorSelected =[UIColor blackColor];
-    [self selectButton:sender];
-}
-
-- (IBAction)cyanColorButton:(UIButton *)sender
-{
-    self.colorSelected =[UIColor cyanColor];
-    [self selectButton:sender];
-}
-
-- (IBAction)blueColorButton:(UIButton *)sender
-{
-    self.colorSelected =[UIColor blueColor];
-    [self selectButton:sender];
-}
-
--(void)selectButton:(UIButton *)button
-{
-    UIButton *buttonPreviouslySelected = [self.buttonSelectedArray objectAtIndex:0];
-    [self.buttonSelectedArray removeAllObjects];
-    [self.buttonSelectedArray addObject:button];
-    button.selected = YES;
-    buttonPreviouslySelected.selected = NO;
-}
-
-- (IBAction)didPresCancel:(UIButton *)sender {
     [self.delegate categoryAddingCancelled];
 }
 
-- (IBAction)didPressAdd:(UIButton *)sender {
-    ACCategory *category = [[ACCategory alloc] initWithName:self.categoryNameTextField.text color:self.colorSelected];
-    [self.delegate categoryAdded:category];
-    
+-(IBAction)didPressAdd:(UIButton *)sender
+{
+    if (![self.categoryNameTextView.text isEqualToString:@""])
+    {
+        ACCategory *category = [ACCategory insertCategoryWithName:self.categoryNameTextView.text color:self.colorSelected serial:self.serialForCategoryToBeAdded];
+        [self.delegate categoryAdded:category];
+    }
+    else
+    {
+        //Disable doneBarButtonItem
+    }
 }
-
 
 @end

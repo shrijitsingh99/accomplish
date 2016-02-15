@@ -8,20 +8,19 @@
 
 #import "ACCategoryTableViewCell.h"
 
+
 @implementation ACCategoryTableViewCell
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+-(void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:NO animated:animated];
-    
+	[super setSelected:NO animated:animated];
 }
 
--(void)setupCellWithCategoryName:(NSString *)aName categoryImageName:(NSString *)anImageName categoryColor:(UIColor *)aColor{
-    _categoryNameLabel.text = aName;
-    _categoryIconImageView.image = [[UIImage imageNamed:anImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    _categoryIconImageView.tintColor = aColor;
-    
+-(void)setupCellWithCategoryName:(NSString *)name categoryImage:(NSString *)imageName categoryColor:(UIColor *)color
+{
+	_categoryNameLabel.text = name;
+	_categoryIconImageView.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	_categoryColorImageView.tintColor = color;
 }
-
 
 @end

@@ -7,64 +7,163 @@
 //
 
 #import "ACSelectCategoryViewController.h"
+#import "MGSwipeButton.h"
+
 
 @interface ACSelectCategoryViewController ()
 
+@property (strong, nonatomic) NSIndexPath *oldIndex;
+
 @end
+
 
 @implementation ACSelectCategoryViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+-(void)viewDidLoad
+{
+	[super viewDidLoad];
+	self.tableView.dataSource = self;
+	self.tableView.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)didReceiveMemoryWarning
+{
+	[super didReceiveMemoryWarning];
 }
+
 
 #pragma mark TableView Delegate
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return [self.categoryArray count];
-    
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return [self.categories count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    ACCategory *category =  self.categoryArray[indexPath.row];
-    cell.textLabel.text = category.name;
-    
-    return cell;
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	MGSwipeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+	ACCategory *category =  self.categories[indexPath.row];
+	if ([category.name isEqualToString:@"DUMMY"])
+    {
+		cell.textLabel.text = @"";
+	}
+	cell.textLabel.text = category.name;
+	cell.delegate = self;
+	return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.delegate selectedCategory:self.categoryArray[indexPath.row] allCategories:self.categoryArray];
 
+#pragma mark MGSwipTableCell Delegate Methods
+
+-(BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point
+{
+	return YES;
 }
 
--(void)categoryAddingCancelled{
-    [self dismissViewControllerAnimated:TRUE completion:nil];
+-(NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
+        swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings
+{
+	swipeSettings.transition = MGSwipeTransitionClipCenter;
+	swipeSettings.keepButtonsSwiped = YES;
+	expansionSettings.buttonIndex = 0;
+	expansionSettings.threshold = 1.5;
+	expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
+	expansionSettings.triggerAnimation.easingFunction = MGSwipeEasingFunctionCubicOut;
+	expansionSettings.fillOnTrigger = YES;
+    UIColor *redColor = [UIColor colorWithRed:1.0 green:(59 / 255.0) blue:(50 / 255.0) alpha:1.0];
+	if (direction == MGSwipeDirectionRightToLeft)
+    {
+		MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"Delete" backgroundColor:redColor padding:15 callback:^BOOL (MGSwipeTableCell *sender)
+        {
+            dispatch_queue_t removeObjectFromCoreData = dispatch_queue_create("removeObjectFromCoreData", NULL);
+            dispatch_async(removeObjectFromCoreData, ^
+            {
+                [(ACCategory *)[self.categories objectAtIndex:[self.tableView indexPathForCell:cell].row] removeCategory];
+				dispatch_async(dispatch_get_main_queue(), ^
+                {
+					[self.categories removeObjectAtIndex:[self.tableView indexPathForCell:cell].row];
+					[self.tableView reloadData];
+				});
+			});
+            return YES;
+        }];
+		return @[deleteButton];
+	}
+	return nil;
 }
 
--(void)categoryAdded:(ACCategory *)category{
-    [self dismissViewControllerAnimated:TRUE completion:nil];
-    [self.categoryArray addObject:category];
-    [self.tableView reloadData];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self.delegate selectedCategory:self.categories[indexPath.row] categories:self.categories];
 }
+
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+	ACCategory *categoryToBeMoved = [self.categories objectAtIndex:sourceIndexPath.row];
+	[self.categories removeObjectAtIndex:sourceIndexPath.row];
+	[self.categories insertObject:categoryToBeMoved atIndex:destinationIndexPath.row];
+
+	int serial = 0;
+	for (ACCategory *category in self.categories)
+    {
+		category.serial = [NSNumber numberWithInt:serial];
+		serial++;
+	}
+}
+
+
+#pragma mark BVReorderTableView Delegate Methods
+
+-(id)saveObjectAndInsertBlankRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ACCategory *category = [self.categories objectAtIndex:indexPath.row];
+    self.oldIndex = indexPath;
+    [self.categories replaceObjectAtIndex:indexPath.row withObject:[ACCategory insertCategoryWithName:@"DUMMY" color:nil serial:nil]];
+    return category;
+}
+
+-(void)finishReorderingWithObject:(id)object atIndexPath:(NSIndexPath *)indexPath
+{
+    [ACCategory removeCategories:@[[self.categories objectAtIndex:self.oldIndex.row]]];
+    [self.categories removeObjectAtIndex:self.oldIndex.row];
+    [self.categories insertObject:object atIndex:indexPath.row];
+    [ACCategory changeCategorySequenceforCategories:self.categories];
+}
+
+
+#pragma mark ACAddTaskViewController Delegate Methods
+
+-(void)categoryAddingCancelled
+{
+	[self dismissViewControllerAnimated:TRUE completion:nil];
+}
+
+-(void)categoryAdded:(ACCategory *)category
+{
+	[self dismissViewControllerAnimated:TRUE completion:nil];
+	[self.categories addObject:category];
+	[self.tableView reloadData];
+}
+
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.destinationViewController isKindOfClass:[ACAddCategoryViewController class]]) {
-        ACAddCategoryViewController *addCategoryViewController = segue.destinationViewController;
-        addCategoryViewController.delegate = self;
-    }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.destinationViewController isKindOfClass:[ACAddCategoryViewController class]])
+    {
+        if ([sender isMemberOfClass:[UIBarButtonItem class]])
+        {
+		ACAddCategoryViewController *addCategoryViewController = segue.destinationViewController;
+		addCategoryViewController.serialForCategoryToBeAdded = (int) [self.categories count];
+		addCategoryViewController.delegate = self;
+        }
+	}
+}
+
+-(IBAction)didPresCancelBarButtonItem:(UIBarButtonItem *)sender
+{
+    [self.delegate didCancelSelectingCategory:self.categories];
 }
 
 @end

@@ -8,12 +8,13 @@
 
 #import "ACTableViewCell.h"
 
+
 @implementation ACTableViewCell
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:NO animated:animated];
-    
+	[super setSelected:NO animated:animated];
+
 }
 
 @end

@@ -7,433 +7,276 @@
 //
 
 #import "ACViewController.h"
+#import "ACTask.h"
+#import "ACTableViewCell.h"
 #import "MGSwipeButton.h"
+#import "UIApplication+CoreData.h"
+
 
 @interface ACViewController ()
 
-@property (strong, nonatomic) ACTask *selectedTask;
 @property (nonatomic) BOOL didSelectTaskForEditing;
 @property (nonatomic) int selectedIndex;
-@property (strong, nonatomic) ACCategory *currentCategory;
 @property (strong, nonatomic) NSMutableArray *arrayOfSortedDates;
-@property (strong, nonatomic) NSMutableDictionary *dictionaryContainingArrayOfSortedDates;
-@property (nonatomic) int keyboardHeight;
-
-
+@property (strong, nonatomic) NSMutableArray *dates;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
+
 @implementation ACViewController
 
-- (void)viewDidLoad {
+-(void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    self.tableView.backgroundColor = [UIColor colorWithRed:(6.0/255.0) green:(14.0/255.0) blue:(22.0/255.0) alpha:1.0];
-    self.tableView.separatorColor = [UIColor colorWithRed:(45.0/255.0) green:(46.0/255.0) blue:(48.0/255.0) alpha:1];
-    [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 65.0, 0, 0)];
-    
-    if (!self.allTasksList) self.allTasksList = [[NSMutableArray alloc] init];
-    if (!self.allCategoriesList) self.allCategoriesList = [[NSMutableArray alloc] init];
-    if (!self.currentCategoriesList) self.allCategoriesList = [[NSMutableArray alloc] init];
-
-    
-    ACCategory *overview = [[ACCategory alloc] init];
-    overview.name = @"Overview";
-    ACCategory *allTasks = [[ACCategory alloc] init];
-    allTasks.name = @"All Tasks";
-    ACCategory *inbox = [[ACCategory alloc] init];
-    inbox.name = @"Inbox";
-    ACCategory *home = [[ACCategory alloc] init];
-    home.name=@"Home";
-    ACCategory *work = [[ACCategory alloc] init];
-    work.name=@"Work";
-    ACCategory *shopping = [[ACCategory alloc] init];
-    shopping.name=@"Shopping";
-    [self.allCategoriesList addObject:overview];
-    [self.allCategoriesList addObject:allTasks];
-    [self.allCategoriesList addObject:inbox];
-    [self.allCategoriesList addObject:home];
-    [self.allCategoriesList addObject:work];
-    [self.allCategoriesList addObject:shopping];
-    self.currentCategory = overview;
-    self.currentCategoriesList = [self.allCategoriesList mutableCopy];
-    [self.currentCategoriesList removeObjectsInRange:NSMakeRange(0, 2)];
-    self.taskArray = self.allTasksList;
-    [self.selectCategoryButton setTitle:overview.name forState:UIControlStateNormal];
-    
-    [self showMenuBar];
+    self.tableView.estimatedRowHeight = 54.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    [self performFirstRunSetup];
+    self.categories = [[ACCategory fetchCategories] mutableCopy];
+    self.dates = [[ACDueDate fetchDueDates] mutableCopy];
+    self.tasks = [[ACTask fetchTasks] mutableCopy];
+    self.category = [self.categories objectAtIndex:0];
+    [self.selectCategoryButton setTitle:self.category.name forState:UIControlStateNormal];
+    [self arrangeTasks];
 }
 
--(void)showMenuBar{
-    self.menuBarScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, 50)];
-    self.menuBarScrollView.backgroundColor = [UIColor redColor];
-    int buttonX = 0;
-    for (int count = 0; count<[self.allCategoriesList count]; count++) {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(buttonX, 0, 100, 50)];
-        button.backgroundColor = [UIColor greenColor];
-        ACCategory *menuCategory = [self.allCategoriesList objectAtIndex:count];
-        [button setTitle:[NSString stringWithFormat:@"%@",menuCategory.name] forState:UIControlStateNormal];
-        button.tag = count;
-        [button addTarget:self action:@selector(didPressMenuBarButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self.menuBarScrollView addSubview:button];
-        buttonX = buttonX + button.frame.size.width;
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+-(void)performFirstRunSetup
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![userDefaults valueForKey:@"isFirstRun"])
+    {
+        ACCategory *overview = [ACCategory insertCategoryWithName:@"Overview" color:nil serial:0];
+        ACCategory *inbox = [ACCategory insertCategoryWithName:@"Inbox" color:nil serial:1];
+        ACCategory *home = [ACCategory insertCategoryWithName:@"Home" color:nil serial:2];
+        ACCategory *work = [ACCategory insertCategoryWithName:@"Work" color:nil serial:3];
+        ACCategory *shopping = [ACCategory insertCategoryWithName:@"Shopping" color:nil serial:4];
+        [ACCategory saveCategories];
+        [userDefaults setBool:YES forKey:@"isFirstRun"];
     }
-    self.menuBarScrollView.contentSize = CGSizeMake(buttonX, 0);
-    self.menuBarScrollView.showsHorizontalScrollIndicator = NO;
-    self.menuBarScrollView.bounces = NO;
-    
-    [self.view addSubview:self.menuBarScrollView];
 }
 
-- (void)didPressMenuBarButton:(UIButton *)sender {
-    [self didSelectCategory:[self.allCategoriesList objectAtIndex:sender.tag]];
-}
 
 #pragma mark TableView Delegate
 
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    if ([self.currentCategory.name isEqualToString:@"Overview"]) {
-        return [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:section]] count];
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if ([self.category.name isEqualToString:@"Overview"])
+    {
+        return [[self.visibleTasks objectAtIndex:section] count];
     }
-    else{
-
-        return  [self.taskArray count];
-        
+    else
+    {
+        return [self.visibleTasks count];
     }
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if ([self.currentCategory.name isEqualToString:@"Overview"]) {
-    return [self.arrayOfSortedDates count];
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if ([self.category.name isEqualToString:@"Overview"])
+    {
+        return [self.visibleTasks count];
     }
-    else{
+    else
+    {
         return 1;
     }
-    
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     ACTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
     ACTask *task;
-    
-    if ([self.currentCategory.name isEqualToString:@"Overview"]) {
-    task =[[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    if ([self.category.name isEqualToString:@"Overview"])
+    {
+        task = [[self.visibleTasks objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
-    else{
-        task = [self.taskArray objectAtIndex:indexPath.row];
+    else
+    {
+        task = [self.visibleTasks objectAtIndex:indexPath.row];
     }
-    
-    cell.taskText.text = task.text;
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    dateFormat.dateStyle = NSDateIntervalFormatterMediumStyle;
-    cell.taskDate.text= [dateFormat stringFromDate:task.date];
+    cell.taskText.text = task.name;
+    cell.taskDate.text = task.dueDate.date;
     cell.categoryName.text = task.category.name;
     cell.categoryColor.image = [[UIImage imageNamed:@"categoryColorImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     cell.categoryColor.tintColor = task.category.color;
-    cell.taskText.frame =CGRectMake(cell.textLabel.frame.origin.x, (cell.taskText.frame.origin.y*task.textLineCount/5), cell.taskText.frame.size.height, cell.taskText.frame.size.height);
-    cell.backgroundColor = [UIColor colorWithRed:(6.0/255.0) green:(14.0/255.0) blue:(22.0/255.0) alpha:1.0];
     cell.delegate = self;
-    
     return cell;
 }
 
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.selectedTask = [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    self.didSelectTaskForEditing = TRUE;
-    self.selectedIndex = (int) indexPath.row;
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];
     [self performSegueWithIdentifier:@"pushToAddTaskViewController" sender:nil];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if ([self.currentCategory.name isEqualToString:@"Overview"]) {
-    return [self.arrayOfSortedDates objectAtIndex:section];
-    }
-    else{
-        return @"";
-    }
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ACTask *task;
-    if ([self.currentCategory.name isEqualToString:@"Overview"]) {
-    task =[[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    }
-    else{
-        task = [self.taskArray objectAtIndex:indexPath.row];
-    }
-
-    return 55.0+task.textLineCount*17.5;
-}
-
-#pragma mark ACAddTaskViewControllerDelegate
-
--(void)taskAddingCancelled{
-    [self dismissViewControllerAnimated:TRUE completion:nil];
-    [self.tableView reloadData];
-    
-    
-}
-
--(void)taskAdded:(ACTask *)task isEditing:(BOOL)editing categoriesList:(NSMutableArray *)allCategoriesList{
-    
-    if (editing == TRUE)
+    if ([self.category.name isEqualToString:@"Overview"])
     {
-        [self.allTasksList removeObjectIdenticalTo:self.selectedTask];
-    }
-    [self showMenuBar];
-    
-    self.currentCategoriesList = allCategoriesList;
-    [self.allCategoriesList removeObjectsInRange:NSMakeRange(2, ([self.allCategoriesList count] - 2))];
-    [self.allCategoriesList addObjectsFromArray:allCategoriesList];
-    [self.allTasksList addObject:task];
-    [self arrangeByCategory];
-    [self.tableView reloadData];
-    [self dismissViewControllerAnimated:TRUE completion:nil];
-    
-    
-}
-
-#pragma mark ACSelectCategoryToSortViewControllerDelegate
-
--(void)didCancelSelectingCategory{
-    [self dismissViewControllerAnimated:TRUE completion:nil];
-}
-
--(void)didSelectCategory:(ACCategory *)category{
-    [self dismissViewControllerAnimated:TRUE completion:nil];
-    self.currentCategory = category;
-    [self.selectCategoryButton setTitle:category.name forState:UIControlStateNormal];
-    [self arrangeByCategory];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.identifier isEqualToString:@"pushToAddTaskViewController"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        ACAddTaskViewController *addTaskViewController = (ACAddTaskViewController *)navigationController.topViewController;
-        addTaskViewController.delegate = self;
-        addTaskViewController.categoryArray = self.currentCategoriesList;
-        
-        if(self.didSelectTaskForEditing == TRUE){
-            addTaskViewController.isInEditingMode = TRUE;
-            self.didSelectTaskForEditing = FALSE;
-            addTaskViewController.taskToEdit = self.selectedTask;
-        }
-        
-    }
-    
-    if ([segue.identifier isEqualToString:@"didShowSelectCategoryToSort"]) {
-        ACSelectCategoryToSortViewController *selectCategoryToSortViewController = segue.destinationViewController;
-        selectCategoryToSortViewController.categoryToSelectArray = self.allCategoriesList;
-        selectCategoryToSortViewController.delegate = self;
-        
-    }
-}
-
--(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
-{
-    ACTask *taskToMove = [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:sourceIndexPath.section]] objectAtIndex:sourceIndexPath.row];
-    NSLog(@"%d",(int) destinationIndexPath.row);
-
-    if (destinationIndexPath.row == 0 && destinationIndexPath.section == sourceIndexPath.section && destinationIndexPath.row != sourceIndexPath.row)
-    {
-        ACTask *adjacentTask = [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:destinationIndexPath.section]] objectAtIndex:(destinationIndexPath.row)];
-
-        int indexOfAdjacentTask = (int)[self.allTasksList indexOfObject:adjacentTask];
-        [self.allTasksList removeObjectIdenticalTo:taskToMove];
-        [self.allTasksList removeObjectIdenticalTo:adjacentTask];
-        [self.allTasksList insertObject:taskToMove atIndex:(indexOfAdjacentTask)];
-        [self.allTasksList insertObject:adjacentTask atIndex:(indexOfAdjacentTask + 1)];
-        [self arrangeByCategory];
-        [self.tableView reloadData];
-
-        
-    }
-    else if (destinationIndexPath.row != 0 && destinationIndexPath.section == sourceIndexPath.section)
-    {
-        ACTask *adjacentTask = [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:destinationIndexPath.section]] objectAtIndex:(destinationIndexPath.row)];
-        [self.allTasksList removeObjectIdenticalTo:taskToMove];
-        int indexOfAdjacentTask = (int)[self.allTasksList indexOfObject:adjacentTask];
-        [self.allTasksList replaceObjectAtIndex:indexOfAdjacentTask withObject:taskToMove];
-        if(sourceIndexPath.row<destinationIndexPath.row){
-        [self.allTasksList insertObject:adjacentTask atIndex:(indexOfAdjacentTask)];
-        }
-        else if(sourceIndexPath.row>destinationIndexPath.row){
-            [self.allTasksList insertObject:adjacentTask atIndex:(indexOfAdjacentTask + 1)];
-        }
-        [self arrangeByCategory];
-        [self.tableView reloadData];
-        
-        
-    }
-    
-    else if (destinationIndexPath.row == 0 && destinationIndexPath.section != sourceIndexPath.section) {
-        ACTask *adjacentTask = [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:destinationIndexPath.section]] objectAtIndex:(destinationIndexPath.row)];
-        taskToMove.date = adjacentTask.date;
-        taskToMove.dateString = adjacentTask.dateString;
-        [self.allTasksList removeObjectIdenticalTo:taskToMove];
-        int indexOfAdjacentTask = (int)[self.allTasksList indexOfObject:adjacentTask];
-        [self.allTasksList replaceObjectAtIndex:indexOfAdjacentTask withObject:taskToMove];
-            [self.allTasksList insertObject:adjacentTask atIndex:(indexOfAdjacentTask+1)];
-        [self arrangeByCategory];
-        [self.tableView reloadData];
-        
-        
-    }
-    else if (destinationIndexPath.row != 0 && destinationIndexPath.section != sourceIndexPath.section) {
-        
-    }
-    
-    [self removeEmptySections];
-
-}
-
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleNone;
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
-
-
-#pragma mark Arrange Tasks by Category & Date
-
--(void)arrangeByCategory
-{
-
-    self.taskArray = [[NSMutableArray alloc] init];
-    if ([self.currentCategory.name isEqualToString:@"Overview"])
-    {
-        self.taskArray = self.allTasksList;
+        return [(ACDueDate *)[self.dates objectAtIndex:section] date];
     }
     else
     {
-        for (ACTask *task in self.allTasksList)
+        return nil;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return  30.0;
+    }
+    else
+    {
+        return 12.0;
+    }
+}
+
+
+#pragma mark ACAddTaskViewControllerDelegate
+
+-(void)taskAddingCancelled
+{
+    [self dismissViewControllerAnimated:TRUE completion:nil];
+}
+
+-(void)taskAdded:(ACTask *)task isEditing:(BOOL)editing categoriesList:(NSMutableArray *)categories dates:(NSArray *)dates
+{
+    if (([self.categories count]) != [categories count])
+    {
+        self.categories = categories;
+        [self.tableView reloadData];
+        
+    }
+    self.dates = [dates mutableCopy];
+    [self.dates sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dates" ascending:YES]]];
+    [self.tasks addObject:task];
+    [self arrangeByCategory];
+
+    [self.tableView reloadData];
+    [self dismissViewControllerAnimated:TRUE completion:nil];
+}
+
+
+#pragma mark ACSelectCategoryToSortViewControllerDelegate
+
+-(void)selectedCategory:(ACCategory *)category categories:(NSArray *)categories
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.category != category)
+    {
+        [self arrangeTasks];
+    }
+    self.category = category;
+    [self.selectCategoryButton setTitle:self.category.name forState:UIControlStateNormal];
+    if ([self.categories count] != [categories count])
+    {
+        [self.categories removeAllObjects];
+        [self.categories addObjectsFromArray:categories];
+    }
+}
+
+-(void)didCancelSelectingCategory:(NSArray *)categories
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self.categories count] != [categories count])
+    {
+        [self.categories removeAllObjects];
+        [self.categories addObjectsFromArray:categories];
+    }
+}
+
+
+#pragma mark - Navigation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"pushToAddTaskViewController"])
+    {
+        if ([sender isMemberOfClass:[UIBarButtonItem class]])
         {
-            
-            if ([self.currentCategory.name isEqualToString:task.category.name])
-            {
-                [self.taskArray addObject:task];
-            }
+        UINavigationController *navigationController = segue.destinationViewController;
+        ACAddTaskViewController *addTaskViewController = (ACAddTaskViewController *)navigationController.topViewController;
+        addTaskViewController.delegate = self;
+        addTaskViewController.categories = self.categories;
+        addTaskViewController.dates = self.dates;
         }
     }
+    if ([segue.identifier isEqualToString:@"pushToSelectCategoryViewController"])
+    {
+        UINavigationController *navigationController = segue.destinationViewController;
+        ACSelectCategoryViewController *selectCategoryViewController = (ACSelectCategoryViewController *)navigationController.topViewController;
+        selectCategoryViewController.categories = [self.categories mutableCopy];
+        selectCategoryViewController.delegate = self;
+    }
+}
 
-    if ([self.currentCategory.name isEqualToString:@"Overview"]){
-        [self arrangeByDate];
+
+#pragma mark Arrange Tasks
+
+-(void)arrangeTasks
+{
+    if ([self.category.name isEqualToString:@"Overview"])
+    {
         [self arrangeIntoSectionsByDate];
+        [self.tableView reloadData];
     }
-    else{
-        [self arrangeByPriorityOfTasks];
+    else
+    {
+        self.visibleTasks = [self.tasks mutableCopy];
+    [self arrangeByCategory];
+    [self arrangeByPriority];
+    [self arrangeByDate];
+    [self.tableView reloadData];
     }
+}
+
+-(void)arrangeByCategory
+{
+    NSPredicate  *filterByCategory = [NSPredicate predicateWithFormat:@"category.name CONTAINS %@", self.category.name];
+    self.visibleTasks = [[self.tasks filteredArrayUsingPredicate:filterByCategory] mutableCopy];
+}
+
+-(void)arrangeByPriority
+{
+    [self.visibleTasks sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO] ]];
 }
 
 -(void)arrangeByDate
 {
-    NSLog(@"arrangeByDate Method Called");
-    self.taskArray = [[self.taskArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"dateString" ascending:YES]]] mutableCopy];
-
+    [self.visibleTasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueDate.date" ascending:YES]]];
 }
-
 
 -(void)arrangeIntoSectionsByDate
 {
-    NSLog(@"arrangeIntoSectionsByDate Method Called");
-
-    for (ACTask *task in self.taskArray) {
-        BOOL breakOuterLoop = NO;
-        BOOL containsDate = NO;
-        if(task.date){
-        if (!self.arrayOfSortedDates) {
-            self.arrayOfSortedDates = [NSMutableArray array];
-            [self.arrayOfSortedDates addObject:task.dateString];
-            break;
-        }
-        for (NSString *stringContainingDate in self.arrayOfSortedDates) {
-
-            if ([stringContainingDate isEqualToString:task.dateString] == NO && breakOuterLoop == NO) {
-                containsDate = NO;
-            }
-            else{
-                containsDate = YES;
-                breakOuterLoop = YES;
-
-            }
-        }
-        if (containsDate == NO)[self.arrayOfSortedDates addObject:task.dateString];
-        
+    [self.visibleTasks removeAllObjects];
+    for (ACDueDate *date in self.dates)
+    {
+        NSPredicate *filterByDatePredicate = [NSPredicate predicateWithFormat:@"dueDate.date CONTAINS %@", date.date];
+        [self.visibleTasks addObject:[self.tasks filteredArrayUsingPredicate:filterByDatePredicate]];
     }
-
-    }
-    [self arrangeArrayIntoSectionsByDate];
-
 }
 
-
--(void)arrangeArrayIntoSectionsByDate
-{
-    self.dictionaryContainingArrayOfSortedDates = [NSMutableDictionary dictionary];
-    for (NSString *string in self.arrayOfSortedDates) {
-        NSMutableArray *array = [NSMutableArray array];
-        [self.dictionaryContainingArrayOfSortedDates setValue:array forKey:string];
-    }
-    for (ACTask *task in self.taskArray) {
-        for (NSString *stringContainingDate in self.arrayOfSortedDates) {
-            if ([stringContainingDate isEqualToString:task.dateString]) {
-                [[self.dictionaryContainingArrayOfSortedDates objectForKey:stringContainingDate] addObject:task];
-            }
-        }
-    }
-    NSLog(@"arrangeArrayIntoSectionsByDate  Called");
-    [self arrangeByPriorityOfTasks];
-
-}
-
--(void)arrangeByPriorityOfTasks
-{
-    NSLog(@"arrangeByPriorityOfTasks Method Called");
-    if ([self.currentCategory.name isEqualToString:@"Overview"]){
-    NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionary];
-    for (NSString *dateString in self.dictionaryContainingArrayOfSortedDates) {
-        NSMutableArray *arrayContainingTasks = [self.dictionaryContainingArrayOfSortedDates objectForKey:dateString];
-
-            [tempDictionary setObject:[[arrayContainingTasks sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"priority.number" ascending:NO]]] mutableCopy] forKey:dateString];
-    }
-        [self.dictionaryContainingArrayOfSortedDates removeAllObjects];
-        self.dictionaryContainingArrayOfSortedDates = [tempDictionary mutableCopy];
-    }
-
-    else{
-        NSMutableArray *tempArray = [self.taskArray mutableCopy];
-        [self.taskArray removeAllObjects];
-    self.taskArray = [[tempArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"priority.number" ascending:NO]]] mutableCopy];
-    }
-
-    [self.tableView reloadData];
-
-}
 
 #pragma mark Swipe Delegate
 
--(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction;
+-(BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction;
 {
     return YES;
 }
 
--(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings
+-(NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings *)swipeSettings
+         expansionSettings:(MGSwipeExpansionSettings *)expansionSettings
 {
     swipeSettings.transition = MGSwipeTransitionClipCenter;
     swipeSettings.keepButtonsSwiped = NO;
@@ -442,80 +285,44 @@
     expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
     expansionSettings.triggerAnimation.easingFunction = MGSwipeEasingFunctionCubicOut;
     expansionSettings.fillOnTrigger = NO;
-    
-    UIColor *greenColor = [UIColor colorWithRed:33/255.0 green:175/255.0 blue:67/255.0 alpha:1.0];
-    UIColor *redColor = [UIColor colorWithRed:1.0 green:59/255.0 blue:50/255.0 alpha:1.0];
-    
-    if (direction == MGSwipeDirectionLeftToRight) {
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"Delete" backgroundColor:redColor padding:15 callback:^BOOL(MGSwipeTableCell *sender) {
-            
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-            NSLog(@"Row:%d , Section:%d",(int)indexPath.row, (int)indexPath.section);
-            if ([self.currentCategory.name isEqualToString:@"Overview"]) {
-            ACTask *selectedTask = [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-            [[self.dictionaryContainingArrayOfSortedDates objectForKey:[self.arrayOfSortedDates objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-                [self.taskArray removeObjectIdenticalTo:selectedTask];
-                [self.allTasksList removeObjectIdenticalTo:selectedTask];
-                [self removeEmptySections];
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            }
-            else{
-                ACTask *selectedTask = [self.taskArray objectAtIndex:indexPath.row];
-                [self.taskArray removeObjectIdenticalTo:selectedTask];
-                [self.allTasksList removeObjectIdenticalTo:selectedTask];
-                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-
-            }
+    UIColor *greenColor = [UIColor colorWithRed:(33 / 255.0) green:(175 / 255.0) blue:(67 / 255.0) alpha:1.0];
+    UIColor *redColor = [UIColor colorWithRed:1.0 green:(59 / 255.0) blue:(50 / 255.0) alpha:1.0];
+    if (direction == MGSwipeDirectionLeftToRight)
+    {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"Delete" backgroundColor:redColor padding:15 callback:^BOOL(MGSwipeTableCell *sender)
+        {
             return YES;
         }];
-        
-        return @[deleteButton];
+        return @[ deleteButton ];
     }
-    else if (direction == MGSwipeDirectionRightToLeft){
-        
+    else if (direction == MGSwipeDirectionRightToLeft)
+    {
+
         MGSwipeButton *completedButton = [MGSwipeButton buttonWithTitle:@"Completed" backgroundColor:greenColor padding:15 callback:^BOOL(MGSwipeTableCell *sender) {
-            return YES; //don't autohide to improve delete animation
+            return YES;
         }];
-        return @[completedButton];
+        return @[ completedButton ];
     }
-    
     return nil;
-
 }
 
--(void)removeEmptySections{
-    NSMutableArray *array = [NSMutableArray array];
-    for (NSString *key in self.dictionaryContainingArrayOfSortedDates) {
-        if ([[self.dictionaryContainingArrayOfSortedDates objectForKey:key] count] == 0) {
-            [array addObject:key];
-        }
+
+#pragma mark Lazy Initialization
+
+-(NSDateFormatter *)dateFormatter
+{
+    if (!_dateFormatter)
+    {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     }
-    [self.dictionaryContainingArrayOfSortedDates removeObjectsForKeys:array];
-    [self.arrayOfSortedDates removeObjectsInArray:array];
-    NSLog(@"%@",self.arrayOfSortedDates);
-    [self.tableView reloadData];
+    return  _dateFormatter;
 }
 
-- (IBAction)addNewTask:(UIButton *)sender {
-    if (self.tableView.editing == NO) {
-        [self.tableView setEditing:YES animated:TRUE];
-    }
-    else if (self.tableView.editing == YES) {
-        [self.tableView setEditing:NO animated:TRUE];
-    }
-//    [self.addNewButton removeFromSuperview];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
-//    UITextField* header = [[UITextField alloc]initWithFrame:CGRectMake(0, [[UIScreen mainScreen]bounds].size.height, [[UIScreen mainScreen]bounds].size.width, 40)];
-//    [header setBackgroundColor:[UIColor redColor]];
-//    [self.view addSubview:header];
-//    [self.view bringSubviewToFront:header];
-//    [header becomeFirstResponder];
-//    [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-//        header.frame = CGRectMake(0, ([[UIScreen mainScreen]bounds].size.height-self.keyboardHeight-30), [[UIScreen mainScreen]bounds].size.width, 30);
-//    } completion:nil];
-}
-- (void)keyboardWillShow:(NSNotification *)notification {
-    self.keyboardHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+-(NSMutableArray *)visibleTasks
+{
+    if (!_visibleTasks) _visibleTasks = [[NSMutableArray alloc] init];
+        return _visibleTasks;
 }
 
 @end

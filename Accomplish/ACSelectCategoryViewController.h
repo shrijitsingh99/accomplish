@@ -8,21 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "ACAddCategoryViewController.h"
+#import "MGSwipeTableCell.h"
 #import "ACCategory.h"
 
 @protocol ACSelectCategoryViewControllerDelegate <NSObject>
 
 @required
-
--(void)selectedCategory:(ACCategory *)category allCategories:(NSMutableArray *)allCategoriesArray;
+-(void)selectedCategory:(ACCategory *)category categories:(NSArray *)categories;
+-(void)didCancelSelectingCategory:(NSArray *)categories;
 
 @end
 
-@interface ACSelectCategoryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ACAddCategoryViewControllerDelegate>
+
+@interface ACSelectCategoryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ACAddCategoryViewControllerDelegate, MGSwipeTableCellDelegate>
 
 @property (weak, nonatomic) id <ACSelectCategoryViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *categoryArray;
-@property (strong, nonatomic) ACCategory *category;
+@property (strong, nonatomic) NSMutableArray *categories;
+
+-(IBAction)didPresCancelBarButtonItem:(UIBarButtonItem *)sender;
 
 @end

@@ -7,12 +7,12 @@
 
 
 /** Transition types */
-typedef NS_ENUM(NSInteger, MGSwipeTransition) {
-    MGSwipeTransitionBorder = 0,
-    MGSwipeTransitionStatic,
-    MGSwipeTransitionDrag,
-    MGSwipeTransitionClipCenter,
-    MGSwipeTransitionRotate3D
+typedef NS_ENUM (NSInteger, MGSwipeTransition) {
+	MGSwipeTransitionBorder = 0,
+	MGSwipeTransitionStatic,
+	MGSwipeTransitionDrag,
+	MGSwipeTransitionClipCenter,
+	MGSwipeTransitionRotate3D
 };
 
 /** Compatibility with older versions */
@@ -21,38 +21,38 @@ typedef NS_ENUM(NSInteger, MGSwipeTransition) {
 #define MGSwipeStateSwippingRightToLeft MGSwipeStateSwipingRightToLeft
 
 /** Swipe directions */
-typedef NS_ENUM(NSInteger, MGSwipeDirection) {
-    MGSwipeDirectionLeftToRight = 0,
-    MGSwipeDirectionRightToLeft
+typedef NS_ENUM (NSInteger, MGSwipeDirection) {
+	MGSwipeDirectionLeftToRight = 0,
+	MGSwipeDirectionRightToLeft
 };
 
 /** Swipe state */
-typedef NS_ENUM(NSInteger, MGSwipeState) {
-    MGSwipeStateNone = 0,
-    MGSwipeStateSwipingLeftToRight,
-    MGSwipeStateSwipingRightToLeft,
-    MGSwipeStateExpandingLeftToRight,
-    MGSwipeStateExpandingRightToLeft,
+typedef NS_ENUM (NSInteger, MGSwipeState) {
+	MGSwipeStateNone = 0,
+	MGSwipeStateSwipingLeftToRight,
+	MGSwipeStateSwipingRightToLeft,
+	MGSwipeStateExpandingLeftToRight,
+	MGSwipeStateExpandingRightToLeft,
 };
 
 /** Swipe state */
-typedef NS_ENUM(NSInteger, MGSwipeExpansionLayout) {
-    MGSwipeExpansionLayoutBorder = 0,
-    MGSwipeExpansionLayoutCenter
+typedef NS_ENUM (NSInteger, MGSwipeExpansionLayout) {
+	MGSwipeExpansionLayoutBorder = 0,
+	MGSwipeExpansionLayoutCenter
 };
 
 /** Swipe Easing Function */
-typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
-    MGSwipeEasingFunctionLinear = 0,
-    MGSwipeEasingFunctionQuadIn,
-    MGSwipeEasingFunctionQuadOut,
-    MGSwipeEasingFunctionQuadInOut,
-    MGSwipeEasingFunctionCubicIn,
-    MGSwipeEasingFunctionCubicOut,
-    MGSwipeEasingFunctionCubicInOut,
-    MGSwipeEasingFunctionBounceIn,
-    MGSwipeEasingFunctionBounceOut,
-    MGSwipeEasingFunctionBounceInOut
+typedef NS_ENUM (NSInteger, MGSwipeEasingFunction) {
+	MGSwipeEasingFunctionLinear = 0,
+	MGSwipeEasingFunctionQuadIn,
+	MGSwipeEasingFunctionQuadOut,
+	MGSwipeEasingFunctionQuadInOut,
+	MGSwipeEasingFunctionCubicIn,
+	MGSwipeEasingFunctionCubicOut,
+	MGSwipeEasingFunctionCubicInOut,
+	MGSwipeEasingFunctionBounceIn,
+	MGSwipeEasingFunctionBounceOut,
+	MGSwipeEasingFunctionBounceInOut
 };
 
 /**
@@ -71,14 +71,14 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /**
  * Swipe settings
  **/
-@interface MGSwipeSettings: NSObject
+@interface MGSwipeSettings : NSObject
 /** Transition used while swiping buttons */
 @property (nonatomic, assign) MGSwipeTransition transition;
 /** Size proportional threshold to hide/keep the buttons when the user ends swiping. Default value 0.5 */
 @property (nonatomic, assign) CGFloat threshold;
-/** Optional offset to change the swipe buttons position. Relative to the cell border position. Default value: 0 
- ** For example it can be used to avoid cropped buttons when sectionIndexTitlesForTableView is used in the UITableView
- **/
+/** Optional offset to change the swipe buttons position. Relative to the cell border position. Default value: 0
+** For example it can be used to avoid cropped buttons when sectionIndexTitlesForTableView is used in the UITableView
+**/
 @property (nonatomic, assign) CGFloat offset;
 /** Animation settings when the swipe buttons are shown */
 @property (nonatomic, strong) MGSwipeAnimation * showAnimation;
@@ -105,7 +105,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
  * Expansion settings to make expandable buttons
  * Swipe button are not expandable by default
  **/
-@interface MGSwipeExpansionSettings: NSObject
+@interface MGSwipeExpansionSettings : NSObject
 /** index of the expandable button (in the left or right buttons arrays) */
 @property (nonatomic, assign) NSInteger buttonIndex;
 /** if true the button fills the cell on trigger, else it bounces back to its initial position */
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /** Animation settings when the expansion is triggered **/
 @property (nonatomic, strong) MGSwipeAnimation * triggerAnimation;
 
-/** Property to read or change expansion animation durations. Default value 0.2 
+/** Property to read or change expansion animation durations. Default value 0.2
  * The target animation is the change of a button from normal state to expanded state
  */
 @property (nonatomic, assign) CGFloat animationDuration;
@@ -129,7 +129,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /** helper forward declaration */
 @class MGSwipeTableCell;
 
-/** 
+/**
  * Optional delegate to configure swipe buttons or to receive triggered actions.
  * Buttons can be configured inline when the cell is created instead of using this delegate,
  * but using the delegate improves memory usage because buttons are only created in demand
@@ -146,8 +146,8 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 
 /**
  * Delegate method invoked when the current swipe state changes
- @param state the current Swipe State
- @param gestureIsActive YES if the user swipe gesture is active. No if the uses has already ended the gesture
+   @param state the current Swipe State
+   @param gestureIsActive YES if the user swipe gesture is active. No if the uses has already ended the gesture
  **/
 -(void) swipeTableCell:(MGSwipeTableCell*) cell didChangeSwipeState:(MGSwipeState) state gestureIsActive:(BOOL) gestureIsActive;
 
@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
  * @return Buttons array
  **/
 -(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings;
+        swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings;
 
 /**
  * Called when the user taps on a swiped cell
@@ -202,7 +202,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /** optional to use contentView alternative. Use this property instead of contentView to support animated views while swiping */
 @property (nonatomic, strong, readonly) UIView * swipeContentView;
 
-/** 
+/**
  * Left and right swipe buttons and its settings.
  * Buttons can be any kind of UIView but it's recommended to use the convenience MGSwipeButton class
  */
@@ -236,11 +236,11 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 
 /** Utility methods to show or hide swipe buttons programmatically */
 -(void) hideSwipeAnimated: (BOOL) animated;
--(void) hideSwipeAnimated: (BOOL) animated completion:(void(^)()) completion;
+-(void) hideSwipeAnimated: (BOOL) animated completion:(void (^)()) completion;
 -(void) showSwipe: (MGSwipeDirection) direction animated: (BOOL) animated;
--(void) showSwipe: (MGSwipeDirection) direction animated: (BOOL) animated completion:(void(^)()) completion;
--(void) setSwipeOffset:(CGFloat)offset animated: (BOOL) animated completion:(void(^)()) completion;
--(void) setSwipeOffset:(CGFloat)offset animation: (MGSwipeAnimation *) animation completion:(void(^)()) completion;
+-(void) showSwipe: (MGSwipeDirection) direction animated: (BOOL) animated completion:(void (^)()) completion;
+-(void) setSwipeOffset:(CGFloat)offset animated: (BOOL) animated completion:(void (^)()) completion;
+-(void) setSwipeOffset:(CGFloat)offset animation: (MGSwipeAnimation *) animation completion:(void (^)()) completion;
 -(void) expandSwipe: (MGSwipeDirection) direction animated: (BOOL) animated;
 
 /** Refresh method to be used when you want to update the cell contents while the user is swiping */
