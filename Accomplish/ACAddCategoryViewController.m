@@ -13,9 +13,15 @@
 
 @interface ACAddCategoryViewController () <UITextViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *doneBarButtonItem;
+@property (weak, nonatomic) IBOutlet UITextView *categoryNameTextView;
+@property (strong, nonatomic) IBOutlet UIScrollView *colorPickerScrollView;
 @property (strong, nonatomic) NSArray *colors;
 @property (strong, nonatomic) UIColor *colorSelected;
 @property (strong, nonatomic) UIButton *buttonSelected;
+
+-(IBAction)didPresCancel:(UIButton *)sender;
+-(IBAction)didPressAdd:(UIButton *)sender;
 
 @end
 

@@ -2,7 +2,7 @@
 //  ACDueDate+CoreDataProperties.h
 //  Accomplish
 //
-//  Created by Shrijit Singh on 15/02/16.
+//  Created by Shrijit Singh on 16/02/16.
 //  Copyright © 2016 Shrijit Singh. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,7 +17,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *date;
 @property (nullable, nonatomic, retain) NSString *time;
-@property (nullable, nonatomic, retain) ACTask *task;
+@property (nullable, nonatomic, retain) NSSet<ACTask *> *task;
+
+@end
+
+@interface ACDueDate (CoreDataGeneratedAccessors)
+
+- (void)addTaskObject:(ACTask *)value;
+- (void)removeTaskObject:(ACTask *)value;
+- (void)addTask:(NSSet<ACTask *> *)values;
+- (void)removeTask:(NSSet<ACTask *> *)values;
 
 @end
 

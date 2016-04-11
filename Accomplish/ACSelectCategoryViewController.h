@@ -23,9 +23,6 @@
 @interface ACSelectCategoryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ACAddCategoryViewControllerDelegate, MGSwipeTableCellDelegate>
 
 @property (weak, nonatomic) id <ACSelectCategoryViewControllerDelegate> delegate;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *categories;
-
--(IBAction)didPresCancelBarButtonItem:(UIBarButtonItem *)sender;
 
 @end

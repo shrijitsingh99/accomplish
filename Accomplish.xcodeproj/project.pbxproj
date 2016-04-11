@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8916C1E21C7266B6003E12C8 /* ACDueDate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8916C1E11C7266B6003E12C8 /* ACDueDate+CoreDataProperties.m */; };
 		891DCD051BC9305300940F9E /* ACReminderDateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 891DCD041BC9305300940F9E /* ACReminderDateTableViewCell.m */; };
 		891DCD081BC930FD00940F9E /* ACReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 891DCD071BC930FD00940F9E /* ACReminder.m */; };
 		892AD6F21C664B0E00CC8253 /* ACTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 892AD6F11C664B0E00CC8253 /* ACTask.m */; };
@@ -24,7 +25,6 @@
 		8930F0741BBE735D00F2EEEC /* ACAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8930F0731BBE735D00F2EEEC /* ACAddTaskViewController.m */; };
 		8949F8B21C70D95300DD02B7 /* ACTask+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8B11C70D95300DD02B7 /* ACTask+CoreDataProperties.m */; };
 		8949F8B81C70D98600DD02B7 /* ACDueDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8B61C70D98600DD02B7 /* ACDueDate.m */; };
-		8949F8C21C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8C11C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m */; };
 		8949F8C51C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8C41C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m */; };
 		8949F8CF1C71B87600DD02B7 /* UIApplication+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8949F8CD1C71B87600DD02B7 /* UIApplication+CoreData.m */; };
 		894E72951C4758580089CA0E /* BVReorderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894E72941C4758580089CA0E /* BVReorderTableView.m */; };
@@ -32,9 +32,12 @@
 		89595A3A1BBFAA2F006C2331 /* ACSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89595A391BBFAA2F006C2331 /* ACSelectCategoryViewController.m */; };
 		89600BD91BC2EF9200973E5C /* ACPriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 89600BD81BC2EF9200973E5C /* ACPriority.m */; };
 		896FC6471C6481290045A7A2 /* SSCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 896FC6461C6481290045A7A2 /* SSCoreData.m */; };
+		8997BC111CBBE9260026DF56 /* ACSelectCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8997BC101CBBE9260026DF56 /* ACSelectCategoryTableViewCell.m */; };
 		89AA95A91BF32B4A006CEE2F /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA95A61BF32B4A006CEE2F /* MGSwipeButton.m */; };
 		89AA95AA1BF32B4A006CEE2F /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AA95A81BF32B4A006CEE2F /* MGSwipeTableCell.m */; };
 		89AD99BB1BBFC53100FBACE5 /* ACAddCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89AD99BA1BBFC53100FBACE5 /* ACAddCategoryViewController.m */; };
+		89BE9A451C72745300E321BC /* NSDateFormatter+HelperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 89BE9A441C72745300E321BC /* NSDateFormatter+HelperMethods.m */; };
+		89BE9A481C72759600E321BC /* UIDatePicker+HelperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 89BE9A471C72759600E321BC /* UIDatePicker+HelperMethods.m */; };
 		89C99CF11BC838F20079C60A /* ACPriorityPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C99CF01BC838F20079C60A /* ACPriorityPickerTableViewCell.m */; };
 		89E566811C6CE5B30023D60C /* UIColor+FlatColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E566801C6CE5B30023D60C /* UIColor+FlatColors.m */; };
 		89E566841C6D1FF30023D60C /* MBAutoGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E566821C6D1FF30023D60C /* MBAutoGrowingTextView.m */; };
@@ -60,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8916C1E01C7266B6003E12C8 /* ACDueDate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ACDueDate+CoreDataProperties.h"; path = "../ACDueDate+CoreDataProperties.h"; sourceTree = "<group>"; };
+		8916C1E11C7266B6003E12C8 /* ACDueDate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACDueDate+CoreDataProperties.m"; path = "../ACDueDate+CoreDataProperties.m"; sourceTree = "<group>"; };
 		891DCD031BC9305300940F9E /* ACReminderDateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACReminderDateTableViewCell.h; sourceTree = "<group>"; };
 		891DCD041BC9305300940F9E /* ACReminderDateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACReminderDateTableViewCell.m; sourceTree = "<group>"; };
 		891DCD061BC930FD00940F9E /* ACReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACReminder.h; sourceTree = "<group>"; };
@@ -93,8 +98,6 @@
 		8949F8B11C70D95300DD02B7 /* ACTask+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACTask+CoreDataProperties.m"; path = "../ACTask+CoreDataProperties.m"; sourceTree = "<group>"; };
 		8949F8B51C70D98600DD02B7 /* ACDueDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACDueDate.h; path = ../ACDueDate.h; sourceTree = "<group>"; };
 		8949F8B61C70D98600DD02B7 /* ACDueDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACDueDate.m; path = ../ACDueDate.m; sourceTree = "<group>"; };
-		8949F8C01C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ACDueDate+CoreDataProperties.h"; path = "../ACDueDate+CoreDataProperties.h"; sourceTree = "<group>"; };
-		8949F8C11C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACDueDate+CoreDataProperties.m"; path = "../ACDueDate+CoreDataProperties.m"; sourceTree = "<group>"; };
 		8949F8C31C70FF8200DD02B7 /* ACCategory+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ACCategory+CoreDataProperties.h"; path = "../ACCategory+CoreDataProperties.h"; sourceTree = "<group>"; };
 		8949F8C41C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ACCategory+CoreDataProperties.m"; path = "../ACCategory+CoreDataProperties.m"; sourceTree = "<group>"; };
 		8949F8CD1C71B87600DD02B7 /* UIApplication+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+CoreData.m"; sourceTree = "<group>"; };
@@ -109,12 +112,18 @@
 		89600BD81BC2EF9200973E5C /* ACPriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPriority.m; sourceTree = "<group>"; };
 		896FC6451C6481290045A7A2 /* SSCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCoreData.h; sourceTree = "<group>"; };
 		896FC6461C6481290045A7A2 /* SSCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCoreData.m; sourceTree = "<group>"; };
+		8997BC0F1CBBE9260026DF56 /* ACSelectCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACSelectCategoryTableViewCell.h; sourceTree = "<group>"; };
+		8997BC101CBBE9260026DF56 /* ACSelectCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSelectCategoryTableViewCell.m; sourceTree = "<group>"; };
 		89AA95A51BF32B4A006CEE2F /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
 		89AA95A61BF32B4A006CEE2F /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
 		89AA95A71BF32B4A006CEE2F /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
 		89AA95A81BF32B4A006CEE2F /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		89AD99B91BBFC53100FBACE5 /* ACAddCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAddCategoryViewController.h; sourceTree = "<group>"; };
 		89AD99BA1BBFC53100FBACE5 /* ACAddCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAddCategoryViewController.m; sourceTree = "<group>"; };
+		89BE9A431C72745300E321BC /* NSDateFormatter+HelperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+HelperMethods.h"; sourceTree = "<group>"; };
+		89BE9A441C72745300E321BC /* NSDateFormatter+HelperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+HelperMethods.m"; sourceTree = "<group>"; };
+		89BE9A461C72759600E321BC /* UIDatePicker+HelperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDatePicker+HelperMethods.h"; sourceTree = "<group>"; };
+		89BE9A471C72759600E321BC /* UIDatePicker+HelperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDatePicker+HelperMethods.m"; sourceTree = "<group>"; };
 		89C99CEF1BC838F20079C60A /* ACPriorityPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPriorityPickerTableViewCell.h; sourceTree = "<group>"; };
 		89C99CF01BC838F20079C60A /* ACPriorityPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPriorityPickerTableViewCell.m; sourceTree = "<group>"; };
 		89E5667F1C6CE5B30023D60C /* UIColor+FlatColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatColors.h"; sourceTree = "<group>"; };
@@ -177,6 +186,8 @@
 		891DCD0A1BC94A4D00940F9E /* Table Cells */ = {
 			isa = PBXGroup;
 			children = (
+				8997BC0F1CBBE9260026DF56 /* ACSelectCategoryTableViewCell.h */,
+				8997BC101CBBE9260026DF56 /* ACSelectCategoryTableViewCell.m */,
 				89F1900B1C0F80AF0026719B /* ACDueDatePickerCell.h */,
 				89F1900C1C0F80AF0026719B /* ACDueDatePickerCell.m */,
 				892BB8ED1BFC95CC005F1482 /* ACDueDateTableViewCell.h */,
@@ -252,6 +263,10 @@
 		8930F0351BBE695300F2EEEC /* Accomplish */ = {
 			isa = PBXGroup;
 			children = (
+				89BE9A431C72745300E321BC /* NSDateFormatter+HelperMethods.h */,
+				89BE9A441C72745300E321BC /* NSDateFormatter+HelperMethods.m */,
+				89BE9A461C72759600E321BC /* UIDatePicker+HelperMethods.h */,
+				89BE9A471C72759600E321BC /* UIDatePicker+HelperMethods.m */,
 				8930F03F1BBE695300F2EEEC /* Main.storyboard */,
 				891DCD0C1BC94A8A00940F9E /* View Controllers */,
 				891DCD0B1BC94A7100940F9E /* Task */,
@@ -297,8 +312,8 @@
 		8949F8B91C70D99D00DD02B7 /* ACDueDate */ = {
 			isa = PBXGroup;
 			children = (
-				8949F8C01C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.h */,
-				8949F8C11C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m */,
+				8916C1E01C7266B6003E12C8 /* ACDueDate+CoreDataProperties.h */,
+				8916C1E11C7266B6003E12C8 /* ACDueDate+CoreDataProperties.m */,
 				8949F8B51C70D98600DD02B7 /* ACDueDate.h */,
 				8949F8B61C70D98600DD02B7 /* ACDueDate.m */,
 			);
@@ -534,6 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8916C1E21C7266B6003E12C8 /* ACDueDate+CoreDataProperties.m in Sources */,
 				8930F06E1BBE698900F2EEEC /* ACViewController.m in Sources */,
 				89E566841C6D1FF30023D60C /* MBAutoGrowingTextView.m in Sources */,
 				8949F8C51C70FF8200DD02B7 /* ACCategory+CoreDataProperties.m in Sources */,
@@ -545,13 +561,15 @@
 				896FC6471C6481290045A7A2 /* SSCoreData.m in Sources */,
 				89595A3A1BBFAA2F006C2331 /* ACSelectCategoryViewController.m in Sources */,
 				891DCD051BC9305300940F9E /* ACReminderDateTableViewCell.m in Sources */,
+				8997BC111CBBE9260026DF56 /* ACSelectCategoryTableViewCell.m in Sources */,
 				8949F8B81C70D98600DD02B7 /* ACDueDate.m in Sources */,
 				89FD79D91C2868A8005AD0D5 /* ACCategory.m in Sources */,
+				89BE9A481C72759600E321BC /* UIDatePicker+HelperMethods.m in Sources */,
 				89C99CF11BC838F20079C60A /* ACPriorityPickerTableViewCell.m in Sources */,
 				892BB8E21BFC8763005F1482 /* ACCategoryTableViewCell.m in Sources */,
 				8949F8CF1C71B87600DD02B7 /* UIApplication+CoreData.m in Sources */,
 				892AD6F21C664B0E00CC8253 /* ACTask.m in Sources */,
-				8949F8C21C70FF7300DD02B7 /* ACDueDate+CoreDataProperties.m in Sources */,
+				89BE9A451C72745300E321BC /* NSDateFormatter+HelperMethods.m in Sources */,
 				892BB8EF1BFC95CC005F1482 /* ACDueDateTableViewCell.m in Sources */,
 				8930F0741BBE735D00F2EEEC /* ACAddTaskViewController.m in Sources */,
 				8930F0441BBE695300F2EEEC /* Accomplish.xcdatamodeld in Sources */,

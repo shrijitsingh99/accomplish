@@ -12,5 +12,6 @@
 @interface ACDueDatePickerCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) IBOutlet UIToolbar *datePickerToolbar;
 
 @end

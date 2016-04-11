@@ -8,11 +8,15 @@
 
 #import "ACSelectCategoryViewController.h"
 #import "MGSwipeButton.h"
+#import "ACSelectCategoryTableViewCell.h"
 
 
 @interface ACSelectCategoryViewController ()
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *oldIndex;
+
+-(IBAction)didPresCancelBarButtonItem:(UIBarButtonItem *)sender;
 
 @end
 
@@ -41,13 +45,20 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	MGSwipeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+	ACSelectCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	ACCategory *category =  self.categories[indexPath.row];
+    
+    if ([cell respondsToSelector:@selector(preservesSuperviewLayoutMargins)]){
+        cell.layoutMargins = UIEdgeInsetsZero;
+        cell.preservesSuperviewLayoutMargins = false;
+    }
+    
 	if ([category.name isEqualToString:@"DUMMY"])
     {
-		cell.textLabel.text = @"";
+		cell.categoryNameLabel.text = @"";
 	}
-	cell.textLabel.text = category.name;
+	cell.categoryNameLabel.text = category.name;
+    cell.categoryColorLabel.backgroundColor = category.color;
 	cell.delegate = self;
 	return cell;
 }
@@ -127,7 +138,7 @@
     [ACCategory removeCategories:@[[self.categories objectAtIndex:self.oldIndex.row]]];
     [self.categories removeObjectAtIndex:self.oldIndex.row];
     [self.categories insertObject:object atIndex:indexPath.row];
-    [ACCategory changeCategorySequenceforCategories:self.categories];
+     self.categories = [[ACCategory changeCategorySequenceforCategories:self.categories] mutableCopy];
 }
 
 

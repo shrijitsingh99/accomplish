@@ -17,7 +17,7 @@
 #import "ACDueDateTableViewCell.h"
 #import "ACDueDate.h"
 
-@protocol ACAddTaskViewControllerDelegate <NSObject, MGSwipeTableCellDelegate>
+@protocol ACAddTaskViewControllerDelegate <NSObject>
 
 @required
 -(void)taskAddingCancelled;
@@ -26,17 +26,12 @@
 @end
 
 
-@interface ACAddTaskViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ACSelectCategoryViewControllerDelegate>
+@interface ACAddTaskViewController : UIViewController
 
 @property (weak, nonatomic) id <ACAddTaskViewControllerDelegate> delegate;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) ACTask *task;
+
 @property (strong, nonatomic) NSMutableArray *categories;
 @property (strong, nonatomic) NSMutableArray *dates;
 @property (nonatomic) BOOL isInEditingMode;
-
--(IBAction)didPressCancelButton:(UIBarButtonItem *)sender;
--(IBAction)didPressAddButton:(UIBarButtonItem *)sender;
--(IBAction)didSelectPriority:(UISegmentedControl *)sender;
 
 @end

@@ -12,7 +12,7 @@
 
 @interface ACTableViewCell : MGSwipeTableCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *categoryColor;
+@property (strong, nonatomic) IBOutlet UILabel *categoryColorLabel;
 @property (strong, nonatomic) IBOutlet UILabel *taskText;
 @property (strong, nonatomic) IBOutlet UILabel *taskDate;
 @property (strong, nonatomic) IBOutlet UILabel *categoryName;

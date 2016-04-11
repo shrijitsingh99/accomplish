@@ -22,12 +22,6 @@
 
 @property (weak, nonatomic) id <ACAddCategoryViewControllerDelegate> delegate;
 
-@property (strong, nonatomic) IBOutlet UIButton *doneBarButtonItem;
-@property (strong, nonatomic) IBOutlet UITextView *categoryNameTextView;
-@property (strong, nonatomic) IBOutlet UIScrollView *colorPickerScrollView;
 @property (nonatomic) int serialForCategoryToBeAdded;
-
--(IBAction)didPresCancel:(UIButton *)sender;
--(IBAction)didPressAdd:(UIButton *)sender;
 
 @end

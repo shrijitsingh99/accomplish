@@ -2,7 +2,7 @@
 //  ACDueDate+CoreDataProperties.m
 //  Accomplish
 //
-//  Created by Shrijit Singh on 15/02/16.
+//  Created by Shrijit Singh on 16/02/16.
 //  Copyright © 2016 Shrijit Singh. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu

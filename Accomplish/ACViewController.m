@@ -7,19 +7,23 @@
 //
 
 #import "ACViewController.h"
+#import "ACAddTaskViewController.h"
 #import "ACTask.h"
 #import "ACTableViewCell.h"
 #import "MGSwipeButton.h"
-#import "UIApplication+CoreData.h"
 
+@interface ACViewController () <UITableViewDataSource, UITableViewDelegate, ACAddTaskViewControllerDelegate, ACSelectCategoryViewControllerDelegate, MGSwipeTableCellDelegate>
 
-@interface ACViewController ()
-
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *selectCategoryButton;
+@property (weak, nonatomic) IBOutlet UIButton *addNewButton;
+@property (strong, nonatomic) NSMutableArray *tasks;
+@property (strong, nonatomic) NSMutableArray *visibleTasks;
+@property (strong, nonatomic) NSMutableArray *categories;
+@property (strong, nonatomic) ACCategory *category;
 @property (nonatomic) BOOL didSelectTaskForEditing;
-@property (nonatomic) int selectedIndex;
 @property (strong, nonatomic) NSMutableArray *arrayOfSortedDates;
 @property (strong, nonatomic) NSMutableArray *dates;
-@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -36,8 +40,8 @@
     self.tableView.estimatedRowHeight = 54.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.categories = [[ACCategory fetchCategories] mutableCopy];
-    self.dates = [[ACDueDate fetchDueDates] mutableCopy];
     self.tasks = [[ACTask fetchTasks] mutableCopy];
+    self.dates = [[ACDueDate fetchDueDates] mutableCopy];
     self.category = [self.categories objectAtIndex:0];
     [self.selectCategoryButton setTitle:self.category.name forState:UIControlStateNormal];
     [self arrangeTasks];
@@ -90,8 +94,7 @@
     cell.taskText.text = task.name;
     cell.taskDate.text = task.dueDate.date;
     cell.categoryName.text = task.category.name;
-    cell.categoryColor.image = [[UIImage imageNamed:@"categoryColorImage.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    cell.categoryColor.tintColor = task.category.color;
+    cell.categoryColorLabel.backgroundColor = task.category.color;
     cell.delegate = self;
     return cell;
 }
@@ -173,6 +176,7 @@
 -(void)didCancelSelectingCategory:(NSArray *)categories
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    self.categories = categories;
     if ([self.categories count] != [categories count])
     {
         [self.categories removeAllObjects];
@@ -212,7 +216,7 @@
 {
     if ([self.category.name isEqualToString:@"Overview"])
     {
-        self.visibleTasks = [ACDueDate arrangeByDueDateIntoSections:self.dates];
+        self.visibleTasks = [ACDueDate arrangeTasks:self.tasks byDueDateIntoSections:self.dates];
     }
     else
     {
@@ -265,15 +269,7 @@
 
 #pragma mark Lazy Initialization
 
--(NSDateFormatter *)dateFormatter
-{
-    if (!_dateFormatter)
-    {
-        _dateFormatter = [[NSDateFormatter alloc] init];
-        _dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-    }
-    return  _dateFormatter;
-}
+
 
 -(NSMutableArray *)visibleTasks
 {

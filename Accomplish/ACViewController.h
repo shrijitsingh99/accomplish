@@ -7,19 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACAddTaskViewController.h"
-#import "ACCategory.h"
 
-@interface ACViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ACAddTaskViewControllerDelegate, ACSelectCategoryViewControllerDelegate, MGSwipeTableCellDelegate>
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *tasks;
-@property (strong, nonatomic) NSMutableArray *visibleTasks;
-@property (strong, nonatomic) NSMutableArray *categories;
-@property (strong, nonatomic) ACCategory *category;
-@property (strong, nonatomic) IBOutlet UIButton *selectCategoryButton;
-@property (strong, nonatomic) IBOutlet UIButton *addNewButton;
-@property (strong, nonatomic) IBOutlet UITextField *addTaskTextField;
-@property (strong, nonatomic) IBOutlet UIScrollView *menuBarScrollView;
+@interface ACViewController : UIViewController
 
 @end

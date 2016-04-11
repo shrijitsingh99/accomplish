@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSEntityDescription *)entity;
 +(ACCategory *)insertCategoryWithName:(NSString *)name color:(UIColor *)color serial:(int)serial;
 +(NSArray *)fetchCategories;
-+(void)changeCategorySequenceforCategories:(NSArray *)categories;
++(NSArray *)changeCategorySequenceforCategories:(NSArray *)categories;
 +(void)saveCategories;
 +(void)removeCategories:(NSArray *)categories;
 -(void)removeCategory;

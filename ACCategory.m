@@ -51,7 +51,7 @@
 
 }
 
-+(void)changeCategorySequenceforCategories:(NSArray *)categories {
++(NSArray *)changeCategorySequenceforCategories:(NSArray *)categories {
     int serial = 1;
     for (ACCategory *category in categories)
     {
@@ -59,8 +59,8 @@
         serial++;
         
     }
-
 	[ACCategory saveCategories];
+    return categories;
 }
 
 +(void)setupCategories
@@ -68,11 +68,11 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (![userDefaults valueForKey:@"isFirstRun"])
     {
-        [ACCategory insertCategoryWithName:@"Overview" color:nil serial:0];
-        [ACCategory insertCategoryWithName:@"Inbox" color:nil serial:1];
-        [ACCategory insertCategoryWithName:@"Home" color:nil serial:2];
-        [ACCategory insertCategoryWithName:@"Work" color:nil serial:3];
-        [ACCategory insertCategoryWithName:@"Shopping" color:nil serial:4];
+        [ACCategory insertCategoryWithName:@"Overview" color:[UIColor blueColor] serial:0];
+        [ACCategory insertCategoryWithName:@"Inbox" color:[UIColor greenColor] serial:1];
+        [ACCategory insertCategoryWithName:@"Home" color:[UIColor yellowColor] serial:2];
+        [ACCategory insertCategoryWithName:@"Work" color:[UIColor orangeColor] serial:3];
+        [ACCategory insertCategoryWithName:@"Shopping" color:[UIColor redColor] serial:4];
         [ACCategory saveCategories];
         [userDefaults setBool:YES forKey:@"isFirstRun"];
     }
