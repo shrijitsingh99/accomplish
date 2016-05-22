@@ -10,7 +10,6 @@
 #import "ACSelectCategoryViewController.h"
 #import "ACCategory.h"
 #import "ACPriorityPickerTableViewCell.h"
-#import "ACPriority.h"
 #import "ACReminderDateTableViewCell.h"
 #import "ACCategoryTableViewCell.h"
 #import "ACDueDatePickerCell.h"
@@ -32,6 +31,7 @@
 
 @property (strong, nonatomic) NSMutableArray *categories;
 @property (strong, nonatomic) NSMutableArray *dates;
+@property (strong, nonatomic) ACTask *taskToEdit;
 @property (nonatomic) BOOL isInEditingMode;
 
 @end

@@ -17,6 +17,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
+    
+    UILocalNotification *localNotifications = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    
+    if (localNotifications) {
+        application.applicationIconBadgeNumber = 0;
+    }
+    
 	return YES;
 }
 

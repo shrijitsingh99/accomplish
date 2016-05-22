@@ -15,6 +15,7 @@
 #import "ACReminder.h"
 #import "NSDateFormatter+HelperMethods.h"
 #import "UIDatePicker+HelperMethods.h"
+#import "ACPushNotification.h"
 
 
 @interface ACAddTaskViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ACSelectCategoryViewControllerDelegate, MGSwipeTableCellDelegate, UITextViewDelegate>
@@ -60,6 +61,15 @@
 {
     [super viewDidLoad];
     
+    if (self.isInEditingMode == YES) {
+        self.taskTextField.text = self.taskToEdit.name;
+        self.taskDescriptionTextField.text = self.taskToEdit.details;
+        self.selectedCategory = self.taskToEdit.category;
+        self.selectedDueDate = self.taskToEdit.dueDate.date;
+        self.selectedReminderDate = self.taskToEdit.reminderDate;
+        self.selectedPriority = self.taskToEdit.priority;
+    }
+    
     self.taskTextField.delegate = self;
     
     self.tableView.dataSource = self;
@@ -76,6 +86,7 @@
     self.taskDescriptionTextField.textColor = [UIColor flatSilverColor];
     self.taskTextField.delegate = self;
     self.taskDescriptionTextField.delegate = self;
+    
     
     NSDate *start = [NSDate date];
     [UIDatePicker sharedDatePicker];
@@ -127,8 +138,7 @@
     if (indexPath.row ==0 && indexPath.section == 0)
     {
         ACCategoryTableViewCell *categoryCell = [tableView dequeueReusableCellWithIdentifier:@"categoryCell"];
-        [categoryCell setupCellWithCategoryName:self.selectedCategory.name categoryImage:@"inboxIcon.png" categoryColor:self.selectedCategory.color];
-        return categoryCell;
+        return [categoryCell setupCellWithCategoryName:self.selectedCategory.name categoryImage:@"inboxIcon.png" categoryColor:self.selectedCategory.color];
     }
     if (indexPath.section == 1)
     {
@@ -139,7 +149,7 @@
             ACDueDateTableViewCell *dueDateCell = [tableView dequeueReusableCellWithIdentifier:@"dueDateCell" forIndexPath:indexPath];
             
             //Check and display current date if dueDatePickerIsEnabled
-            if (self.selectedDueDate == NO && self.isDueDatePickerEnabled == YES)
+            if (self.selectedDueDate == nil && self.taskDueDateIsSet == YES)
             {
                 [dueDateCell setupCellWithDueDate:[[NSDateFormatter sharedDateFormatter] stringFromDate:[NSDate date]] forEnabledState:self.taskDueDateIsSet];
             }
@@ -153,11 +163,9 @@
         else if ([currentCell isEqualToString:@"datePickerCell"])
         {
             ACDueDatePickerCell *datePickerCell = [tableView dequeueReusableCellWithIdentifier:@"datePickerCell" forIndexPath:indexPath];
-            datePickerCell.datePicker.backgroundColor = [UIColor flatConcreteColor];
 
             if (self.isDueDatePickerEnabled)
             {
-                datePickerCell.datePicker.datePickerMode = UIDatePickerModeDate;
                 [datePickerCell.datePicker removeTarget:self action:@selector(reminderDateDidChange:) forControlEvents:UIControlEventValueChanged];
                 [datePickerCell.datePicker addTarget:self action:@selector(dueDateDidChange:) forControlEvents:UIControlEventValueChanged];
                 if (self.selectedDueDate == nil)
@@ -167,10 +175,12 @@
                     self.dueDateString = [[NSDateFormatter sharedDateFormatter] stringFromDate:self.selectedDueDate];
                     
                 }
+                return [datePickerCell setupCellWithDatePickerMode:UIDatePickerModeDate backgroundColor:[UIColor flatConcreteColor]];
+
+            
             }
             else if (self.isReminderDatePickerEnabled)
             {
-                datePickerCell.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
                 [datePickerCell.datePicker removeTarget:self action:@selector(dueDateDidChange:) forControlEvents:UIControlEventValueChanged];
                 [datePickerCell.datePicker addTarget:self action:@selector(reminderDateDidChange:) forControlEvents:UIControlEventValueChanged];
                 if (self.selectedReminderDate == nil)
@@ -179,17 +189,19 @@
                     self.selectedReminderDate = [NSDate date];
                     self.reminderDateString = [[ACReminder dateFormat] stringFromDate:self.selectedDueDate];
                 }
+                return [datePickerCell setupCellWithDatePickerMode:UIDatePickerModeDateAndTime backgroundColor:[UIColor flatConcreteColor]];
             }
-            return datePickerCell;
         }
         else if([currentCell isEqualToString:@"reminderCell"])
         {
             ACReminderDateTableViewCell *reminderDateCell = [tableView dequeueReusableCellWithIdentifier:@"reminderCell" forIndexPath:indexPath];
             
             //Check and display current date if dueDatePickerIsEnabled
-            if (self.selectedReminderDate == NO && self.isReminderDatePickerEnabled == YES)
+            if (self.selectedReminderDate == nil && self.taskReminderIsSet == YES)
             {
-                [reminderDateCell setupCellWithReminderDate:[[ACReminder dateFormat] stringFromDate:[NSDate date]] forEnabledState:self.taskReminderIsSet];
+                self.selectedReminderDate = [NSDate date];
+                self.reminderDateString = [[ACReminder dateFormat] stringFromDate:self.selectedReminderDate];
+                [reminderDateCell setupCellWithReminderDate:self.reminderDateString forEnabledState:self.taskReminderIsSet];
             }
             else
             {
@@ -309,7 +321,7 @@
 
 -(IBAction)didFinishEditingDueDate:(UIBarButtonItem *)sender
 {
-    [self.tableView deleteRowsAtIndexPaths:[self arrayForIndexPath:1 section:1] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView deleteRowsAtIndexPaths:[self arrayForIndexPath:1 section:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(IBAction)didDeleteDueDate:(id)sender
@@ -317,6 +329,7 @@
     self.dueDateString = @"";
     self.taskDueDateIsSet = NO;
     self.selectedDueDate = nil;
+    self.isReminderDatePickerEnabled = NO;
     [self.tableView reloadRowsAtIndexPaths:[self arrayForIndexPath:0 section:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
@@ -332,12 +345,11 @@
 
 -(IBAction)didFinishEditingReminderTime:(UIBarButtonItem *)sender
 {
-    [self.tableView deleteRowsAtIndexPaths:[self arrayForIndexPath:2 section:1] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView deleteRowsAtIndexPaths:[self arrayForIndexPath:2 section:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(IBAction)didDeleteReminderTime:(UIBarButtonItem *)sender
 {
-    
     self.reminderDateString = @"";
     self.taskReminderIsSet = NO;
     self.selectedReminderDate = nil;
@@ -427,6 +439,10 @@
     [ACTask saveTasks];
     if (![self.taskTextField.text isEqualToString:@""])
     {
+        if (self.task.reminderDate) {
+            [ACPushNotification scheduledPusNotificationForTask:self.task on:self.task.reminderDate];
+            NSLog(@"Registered Notification");
+        }
         [self.delegate taskAdded:self.task isEditing:self.isInEditingMode == FALSE categoriesList:self.categories dates:self.dates];
     }
     else
@@ -458,12 +474,12 @@
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    if (textView == self.taskTextField)
+    if (textView == self.taskTextField && [self.taskTextField.text isEqualToString:@"Task Name"])
     {
         self.taskTextField.text = @"";
         self.taskTextField.textColor = [UIColor whiteColor];
     }
-    else if (textView == self.taskDescriptionTextField)
+    else if (textView == self.taskDescriptionTextField && [self.taskDescriptionTextField.text isEqualToString:@"Task Details"])
     {
         self.taskDescriptionTextField.text = @"";
         self.taskDescriptionTextField.textColor = [UIColor whiteColor];

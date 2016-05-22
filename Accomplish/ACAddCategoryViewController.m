@@ -19,9 +19,10 @@
 @property (strong, nonatomic) NSArray *colors;
 @property (strong, nonatomic) UIColor *colorSelected;
 @property (strong, nonatomic) UIButton *buttonSelected;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
 
--(IBAction)didPresCancel:(UIButton *)sender;
--(IBAction)didPressAdd:(UIButton *)sender;
+
+- (IBAction)didPressCancel:(UIBarButtonItem *)sender;
 
 @end
 
@@ -32,36 +33,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        self.categoryNameTextView.text = @"Category Name";
-        self.categoryNameTextView.textColor = [UIColor flatSilverColor];
+    [self.categoryNameTextView becomeFirstResponder];
         self.categoryNameTextView.delegate = self;
-    self.categoryNameTextView.textContainerInset = UIEdgeInsetsMake(12, 10, 0, 0);
     [self showColorPicker];
-}
-
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    self.categoryNameTextView.text = @"";
-    self.categoryNameTextView.textColor = [UIColor whiteColor];
-    return YES;
-}
-
--(void)textViewDidChange:(UITextView *)textView
-{
-    if (self.categoryNameTextView.text.length == 0)
-    {
-        self.categoryNameTextView.textColor = [UIColor flatSilverColor];
-        self.categoryNameTextView.text = @"Category Name";
-        [self.categoryNameTextView resignFirstResponder];
-    }
 }
 
 -(void)showColorPicker
 {
     self.colors = [UIColor fetchFlatColors];
     self.colorSelected = self.colors[0];
-    self.colorPickerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 145, 600, 40)];
-    self.colorPickerScrollView.backgroundColor = [UIColor darkGrayColor];
+    self.colorPickerScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 173, 600, 40)];
+    self.colorPickerScrollView.backgroundColor = [UIColor grayColor];
     self.colorPickerScrollView.showsHorizontalScrollIndicator = NO;
     int x = 5;
     for (int count = 0; count < [self.colors count]; count++)
@@ -101,13 +83,7 @@
     }
 }
 
--(IBAction)didPresCancel:(UIButton *)sender
-{
-    [self.delegate categoryAddingCancelled];
-}
-
--(IBAction)didPressAdd:(UIButton *)sender
-{
+- (IBAction)didPressAdd:(UIBarButtonItem *)sender {
     if (![self.categoryNameTextView.text isEqualToString:@""])
     {
         ACCategory *category = [ACCategory insertCategoryWithName:self.categoryNameTextView.text color:self.colorSelected serial:self.serialForCategoryToBeAdded];
@@ -115,8 +91,11 @@
     }
     else
     {
-        //Disable doneBarButtonItem
     }
 }
 
+- (IBAction)didPressCancel:(UIBarButtonItem *)sender {
+    [self.delegate categoryAddingCancelled];
+
+}
 @end

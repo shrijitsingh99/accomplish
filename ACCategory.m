@@ -78,11 +78,6 @@
     }
 }
 
-+(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byCategory:(ACCategory *)category
-{
-    NSPredicate  *filterByCategory = [NSPredicate predicateWithFormat:@"category.name CONTAINS %@", category.name];
-    NSMutableArray *tasksArrangeByCategory = [[tasks filteredArrayUsingPredicate:filterByCategory] mutableCopy];
-    return tasksArrangeByCategory;
-}
+
 
 @end

@@ -92,12 +92,14 @@
         task = [self.visibleTasks objectAtIndex:indexPath.row];
     }
     cell.taskText.text = task.name;
-    cell.taskDate.text = task.dueDate.date;
+    cell.taskDate.text = task.dueDate.dateString;
     cell.categoryName.text = task.category.name;
     cell.categoryColorLabel.backgroundColor = task.category.color;
+    [self setTaskPriorityLabel:cell.taskPriority forPriority:[task.priority intValue]];
     cell.delegate = self;
     return cell;
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -109,7 +111,7 @@
 {
     if ([self.category.name isEqualToString:@"Overview"])
     {
-        return [(ACDueDate *)[self.dates objectAtIndex:section] date];
+        return [(ACDueDate *)[self.dates objectAtIndex:section] dateString];
     }
     else
     {
@@ -146,7 +148,7 @@
         
     }
     self.dates = [dates mutableCopy];
-    [self.dates sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+    [self.dates sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dateString" ascending:YES]]];
     [self.tasks addObject:task];
     [self arrangeTasks];
 
@@ -176,7 +178,7 @@
 -(void)didCancelSelectingCategory:(NSArray *)categories
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.categories = categories;
+    self.categories =  [categories mutableCopy];
     if ([self.categories count] != [categories count])
     {
         [self.categories removeAllObjects];
@@ -216,7 +218,7 @@
 {
     if ([self.category.name isEqualToString:@"Overview"])
     {
-        self.visibleTasks = [ACDueDate arrangeTasks:self.tasks byDueDateIntoSections:self.dates];
+        self.visibleTasks = [ACTask arrangeTasks:self.tasks byDueDateIntoSections:self.dates];
     }
     else
     {
@@ -224,7 +226,6 @@
     }
     [self.tableView reloadData];
 }
-
 
 
 #pragma mark Swipe Delegate
@@ -251,13 +252,39 @@
     {
         MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"Delete" backgroundColor:redColor padding:15 callback:^BOOL(MGSwipeTableCell *sender)
         {
+            NSIndexPath *index =[self.tableView indexPathForCell:cell];
+            ACTask *taskToRemove;
+            if ([self.category.name isEqualToString:@"Overview"])
+            {
+                taskToRemove = [[self.visibleTasks objectAtIndex:index.section] objectAtIndex:index.row];
+                [[self.visibleTasks objectAtIndex:index.section] removeObjectAtIndex:index.row];
+                [self.tableView deleteRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationRight];
+                if ([[self.visibleTasks objectAtIndex:index.section] count] == 0)
+                {
+                    [(ACDueDate *)[self.dates objectAtIndex:index.section] removeDueDate];
+                    [self.dates removeObjectAtIndex:index.section];
+                    [self.visibleTasks removeObjectAtIndex:index.section];
+                    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:index.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
+            }
+            else
+            {
+            taskToRemove = [self.visibleTasks objectAtIndex:index.row];
+            [self.visibleTasks removeObjectAtIndex:index.row];
+                if([self isDateEmptyForTask:taskToRemove] == YES)
+                {
+                    [self removeEmptyDate:taskToRemove.dueDate];
+                }
+                [self.tableView deleteRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationRight];
+            }
+            [taskToRemove removeTask];
+
             return YES;
         }];
         return @[ deleteButton ];
     }
     else if (direction == MGSwipeDirectionRightToLeft)
     {
-
         MGSwipeButton *completedButton = [MGSwipeButton buttonWithTitle:@"Completed" backgroundColor:greenColor padding:15 callback:^BOOL(MGSwipeTableCell *sender) {
             return YES;
         }];
@@ -267,9 +294,52 @@
 }
 
 
+-(BOOL)isDateEmptyForTask:(ACTask *)task
+{
+    for (ACTask *taskToCheck in self.visibleTasks) {
+        if (task.dueDate == taskToCheck.dueDate) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+-(void)removeEmptyDate:(ACDueDate *)date
+{
+    for (ACDueDate *dateToCheck in self.dates) {
+        if([dateToCheck.dateString isEqualToString:date.dateString])
+        {
+            [self.dates removeObject:dateToCheck];
+            [dateToCheck removeDueDate];
+        }
+    }
+}
+
+#pragma mark Priority Method
+
+-(void)setTaskPriorityLabel:(UILabel *)label forPriority:(int)priority
+{
+    if (priority == 0)
+    {
+        label.text = @"";
+    }
+    else if (priority == 1)
+    {
+        label.text = @"!";
+        label.textColor = [UIColor yellowColor];
+    }
+    else if (priority == 2)
+    {
+        label.text = @"!!";
+        label.textColor = [UIColor orangeColor];
+    }
+    else if (priority == 3)
+    {
+        label.text = @"!!!";
+        label.textColor = [UIColor redColor];
+    }
+}
 #pragma mark Lazy Initialization
-
-
 
 -(NSMutableArray *)visibleTasks
 {

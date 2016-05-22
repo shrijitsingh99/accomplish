@@ -17,10 +17,9 @@
 +(ACDueDate *)insertDueDateWithDate:(NSDate *)date
 {
     ACDueDate *coreDataDueDate = [SSCoreData insertNewObjectForEntityForName:@"DueDate"];
-    [[NSDateFormatter sharedDateFormatter] setDateFormat:@"hh:mm:ss"];
-    coreDataDueDate.time = [[NSDateFormatter sharedDateFormatter]stringFromDate:date];
+    coreDataDueDate.date = date;
     [[NSDateFormatter sharedDateFormatter] setDateStyle:NSDateFormatterMediumStyle];
-    coreDataDueDate.date = [[NSDateFormatter sharedDateFormatter] stringFromDate:date];
+    coreDataDueDate.dateString = [[NSDateFormatter sharedDateFormatter] stringFromDate:date];
 
     [ACDueDate saveDueDate];
     
@@ -42,24 +41,18 @@
     return dates;
 }
 
-+(NSMutableArray *)arrangeByDueDate:(NSMutableArray *)tasks
+
+
++(void)removeDueDates:(NSArray *)dates
 {
-    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueDate.date" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"dueDate.time" ascending:YES]]];
-    return tasks;
+    [SSCoreData removeObjects:dates];
+    [ACDueDate saveDueDate];
 }
 
-+(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byDueDateIntoSections:(NSMutableArray *)dates
+-(void)removeDueDate
 {
-    NSMutableArray *taskSortedIntoSections = [[NSMutableArray alloc] init];
-    for (ACDueDate *date in dates)
-    {
-        NSPredicate *filterByDatePredicate = [NSPredicate predicateWithFormat:@"dueDate.date CONTAINS %@", date.date];
-        [taskSortedIntoSections addObject:[tasks filteredArrayUsingPredicate:filterByDatePredicate]];
-    }
-    return taskSortedIntoSections;
+    [ACDueDate removeDueDates:@[self]];
 }
-
-
 
 
 @end

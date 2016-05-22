@@ -16,11 +16,14 @@
 	[super setSelected:NO animated:animated];
 }
 
--(void)setupCellWithCategoryName:(NSString *)name categoryImage:(NSString *)imageName categoryColor:(UIColor *)color
+-(ACCategoryTableViewCell *)setupCellWithCategoryName:(NSString *)name categoryImage:(NSString *)imageName categoryColor:(UIColor *)color
 {
 	_categoryNameLabel.text = name;
 	_categoryIconImageView.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-	_categoryColorImageView.tintColor = color;
+    [_categoryIconImageView setTintColor:color];
+    
+    return self;
 }
+
 
 @end

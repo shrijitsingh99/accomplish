@@ -14,4 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (strong, nonatomic) IBOutlet UIToolbar *datePickerToolbar;
 
+-(ACDueDatePickerCell *)setupCellWithDatePickerMode:(UIDatePickerMode)mode backgroundColor:(UIColor *)color;
+
 @end

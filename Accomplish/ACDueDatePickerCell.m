@@ -16,5 +16,12 @@
 //    return  [UIDatePicker sharedDatePicker];
 //}
 
+-(ACDueDatePickerCell *)setupCellWithDatePickerMode:(UIDatePickerMode)mode backgroundColor:(UIColor *)color
+{
+    self.datePicker.backgroundColor = color;
+    self.datePicker.datePickerMode = mode;
+    
+    return self;
+}
 
 @end

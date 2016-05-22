@@ -16,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *taskText;
 @property (strong, nonatomic) IBOutlet UILabel *taskDate;
 @property (strong, nonatomic) IBOutlet UILabel *categoryName;
+@property (strong, nonatomic) IBOutlet UILabel *taskPriority;
 
 @end

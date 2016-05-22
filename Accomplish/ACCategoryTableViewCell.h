@@ -15,6 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *categoryColorImageView;
 
--(void)setupCellWithCategoryName:(NSString *)name categoryImage:(NSString *)imageName categoryColor:(UIColor *)color;
+-(ACCategoryTableViewCell *)setupCellWithCategoryName:(NSString *)name categoryImage:(NSString *)imageName categoryColor:(UIColor *)color;
 
 @end

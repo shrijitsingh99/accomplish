@@ -28,6 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)removeTask;
 +(NSMutableArray *)tasks:(NSMutableArray *)tasks ofCategory:(ACCategory *)category;
 
++(NSMutableArray *)arrangeByPriority:(NSMutableArray *)tasks;
++(NSMutableArray *)arrangeByDueDate:(NSMutableArray *)tasks;
++(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byDueDateIntoSections:(NSMutableArray *)dates;
++(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byCategory:(ACCategory *)category;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ACReminder : NSObject
+@interface ACRemsinder : NSObject
 
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;

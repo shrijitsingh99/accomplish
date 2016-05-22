@@ -6,10 +6,10 @@
 //  Copyright © 2015 Shrijit Singh. All rights reserved.
 //
 
-#import "ACReminder.h"
+#import "ACRemsinder.h"
 
 
-@implementation ACReminder
+@implementation ACRemsinder
 
 -(id)initWithReminderDate:(NSDate *)date
 {
@@ -23,7 +23,7 @@
 	}
 	else
 	{
-		_dateString = [[ACReminder dateFormat] stringFromDate:date];
+		_dateString = [[ACRemsinder dateFormat] stringFromDate:date];
 		_isEnabled = YES;
 	}
 	return self;

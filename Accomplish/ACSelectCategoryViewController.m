@@ -145,7 +145,7 @@
 #pragma mark ACAddTaskViewController Delegate Methods
 
 -(void)categoryAddingCancelled
-{
+{NSLog(@"Log 1: " );
 	[self dismissViewControllerAnimated:TRUE completion:nil];
 }
 
@@ -161,11 +161,12 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.destinationViewController isKindOfClass:[ACAddCategoryViewController class]])
+	if ([segue.destinationViewController isKindOfClass:[UINavigationController  class]])
     {
         if ([sender isMemberOfClass:[UIBarButtonItem class]])
         {
-		ACAddCategoryViewController *addCategoryViewController = segue.destinationViewController;
+        UINavigationController *navController = segue.destinationViewController;
+            ACAddCategoryViewController *addCategoryViewController = (ACAddCategoryViewController *) navController.topViewController;
 		addCategoryViewController.serialForCategoryToBeAdded = (int) [self.categories count];
 		addCategoryViewController.delegate = self;
         }

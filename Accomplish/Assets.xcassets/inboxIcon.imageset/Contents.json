@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "inboxIcon@1x.png",
+      "filename" : "inbox-1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "inboxIcon@2x.png",
+      "filename" : "inbox-2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "inboxIcon@3x.png",
+      "filename" : "inbox.png",
       "scale" : "3x"
     }
   ],
