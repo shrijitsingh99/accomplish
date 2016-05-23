@@ -35,9 +35,15 @@
 }
 
 +(NSArray *)fetchCategories {
-	NSArray *categories = [SSCoreData fetchObjectsForEntityForName:@"Category" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"serial"
-	                                                                                                  ascending:YES]]];
-//	NSLog(@"Fetched Categories:%@",categories);
+//	NSArray *categories = [SSCoreData fetchObjectsForEntityForName:@"Category" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"serial"
+//	                                                                                                  ascending:YES]]];
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Category"];
+            fetchRequest.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"serial"
+                                                                       ascending:YES]];
+
+        NSError *error = nil;
+    NSArray *categories = [[UIApplication applicationManagedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    NSLog(@"Fetched Categories:%@",categories);
 
 	return categories;
 }
@@ -46,7 +52,7 @@
 }
 
 +(void)removeCategories:(NSArray *)categories {
-	[SSCoreData removeObjects:categories];
+//	[SSCoreData removeObjects:categories];
 	[ACCategory saveCategories];
 
 }

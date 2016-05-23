@@ -37,16 +37,16 @@
     }
 }
 
-+(NSArray *)fetchReminder
-{
-    NSArray *reminders = [SSCoreData fetchObjectsForEntityForName:@"Reminders" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date"
-                                                                                                                           ascending:YES]]];
-    return reminders;
-}
+//+(NSArray *)fetchReminder
+//{
+//    NSArray *reminders = [SSCoreData fetchObjectsForEntityForName:@"Reminders" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date"
+//                                                                                                                           ascending:YES]]];
+//    return reminders;
+//}
 
 +(void)removeReminders:(NSArray *)reminders
 {
-    [SSCoreData removeObjects:reminders];
+//    [SSCoreData removeObjects:reminders];
     [ACReminder saveReminder];
 }
 

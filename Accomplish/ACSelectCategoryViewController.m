@@ -28,6 +28,9 @@
 	[super viewDidLoad];
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
+
 }
 
 -(void)didReceiveMemoryWarning

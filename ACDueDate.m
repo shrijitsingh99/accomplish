@@ -35,17 +35,17 @@
     }
 }
 
-+(NSArray *)fetchDueDates {
-    NSArray *dates = [SSCoreData fetchObjectsForEntityForName:@"DueDate" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date"
-                                                                                                                        ascending:YES]]];
-    return dates;
-}
+//+(NSArray *)fetchDueDates {
+//    NSArray *dates = [SSCoreData fetchObjectsForEntityForName:@"DueDate" withSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date"
+//                                                                                                                        ascending:YES]]];
+//    return dates;
+//}
 
 
 
 +(void)removeDueDates:(NSArray *)dates
 {
-    [SSCoreData removeObjects:dates];
+//    [SSCoreData removeObjects:dates];
     [ACDueDate saveDueDate];
 }
 

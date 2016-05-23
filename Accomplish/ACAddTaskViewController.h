@@ -20,7 +20,7 @@
 
 @required
 -(void)taskAddingCancelled;
--(void)taskAdded:(ACTask *)task isEditing:(BOOL)editing categoriesList:(NSMutableArray *)categories dates:(NSArray *)dates;
+-(void)taskAdded;
 
 @end
 

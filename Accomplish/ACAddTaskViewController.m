@@ -435,15 +435,15 @@
 
 -(IBAction)didPressAddButton:(UIBarButtonItem *)sender
 {
-    self.task = [ACTask insertTaskWithName:self.taskTextField.text details:self.taskDescriptionTextField.text serial:nil priority:self.selectedPriority dueDate:[self dueDate] reminderDate:self.selectedReminderDate isCompleted:NO intoCategory:self.selectedCategory];
-    [ACTask saveTasks];
     if (![self.taskTextField.text isEqualToString:@""])
     {
+    self.task = [ACTask insertTaskWithName:self.taskTextField.text details:self.taskDescriptionTextField.text serial:nil priority:self.selectedPriority dueDate:[self dueDate] reminderDate:self.selectedReminderDate isCompleted:NO intoCategory:self.selectedCategory];
+
         if (self.task.reminderDate) {
             [ACPushNotification scheduledPusNotificationForTask:self.task on:self.task.reminderDate];
             NSLog(@"Registered Notification");
         }
-        [self.delegate taskAdded:self.task isEditing:self.isInEditingMode == FALSE categoriesList:self.categories dates:self.dates];
+        [self.delegate taskAdded];
     }
     else
     {

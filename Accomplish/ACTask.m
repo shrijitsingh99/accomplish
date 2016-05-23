@@ -23,11 +23,14 @@
 
 +(ACTask *)insertTaskWithName:(NSString *)name details:(NSString *)details serial:(int)serial priority:(int)priority dueDate:(ACDueDate *)dueDate reminderDate:(NSDate *)reminderDate isCompleted:(BOOL)completed intoCategory:(ACCategory *)category
 {
-
+    NSArray *categories = [ACCategory fetchCategories];
 	ACTask *coreDataTask = [SSCoreData insertNewObjectForEntityForName:@"Task"];
 	coreDataTask.name = name;
 	coreDataTask.details = details;
-	coreDataTask.serial = [NSNumber numberWithInt:serial];
+    if(serial)
+    {
+	coreDataTask.serial = [NSNumber numberWithInt:(int) [[categories objectAtIndex:[categories indexOfObjectIdenticalTo:coreDataTask.category]] count]];
+    }
 	coreDataTask.priority = [NSNumber numberWithInt:priority];
 	coreDataTask.dueDate = dueDate;
 	coreDataTask.reminderDate = reminderDate;
@@ -61,51 +64,51 @@
 
 }
 
-+(void)changeCategorySequenceforTasks:(NSArray *)tasks {
-	NSArray *fetchedTasks = [ACTask fetchTasks];
-	for (ACCategory *fetchedTask in fetchedTasks) {
-		ACCategory *identicalTask = [tasks objectAtIndex:[tasks indexOfObjectIdenticalTo:fetchedTask]];;
-		fetchedTask.serial= identicalTask.serial;
-	}
-	[ACCategory saveCategories];
-}
+//+(void)changeCategorySequenceforTasks:(NSArray *)tasks {
+//	NSArray *fetchedTasks = [ACTask fetchTasks];
+//	for (ACCategory *fetchedTask in fetchedTasks) {
+//		ACCategory *identicalTask = [tasks objectAtIndex:[tasks indexOfObjectIdenticalTo:fetchedTask]];;
+//		fetchedTask.serial= identicalTask.serial;
+//	}
+//	[ACCategory saveCategories];
+//}
 
-+(NSMutableArray *)tasks:(NSMutableArray *)tasks ofCategory:(ACCategory *)category
-{
-    NSMutableArray *sortedTasks = tasks;
-    sortedTasks = [self arrangeTasks:sortedTasks byCategory:category];
-    sortedTasks = [self arrangeByDueDate:sortedTasks];
-    sortedTasks = [self arrangeByPriority:sortedTasks];
-    return sortedTasks;
-}
-
-+(NSMutableArray *)arrangeByPriority:(NSMutableArray *)tasks
-{
-    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO]]];
-    return tasks;
-}
-
-+(NSMutableArray *)arrangeByDueDate:(NSMutableArray *)tasks
-{
-//    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueDate.date" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"dueDate.time" ascending:YES]]];
-    return tasks;
-}
-
-+(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byDueDateIntoSections:(NSMutableArray *)dates
-{
-    NSMutableArray *taskSortedIntoSections = [[NSMutableArray alloc] init];
-    for (ACDueDate *date in dates)
-    {
-        NSPredicate *filterByDatePredicate = [NSPredicate predicateWithFormat:@"dueDate.dateString CONTAINS %@", date.dateString];
-        [taskSortedIntoSections addObject:[[tasks filteredArrayUsingPredicate:filterByDatePredicate] mutableCopy]];
-    }
-    return taskSortedIntoSections;
-}
-
-+(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byCategory:(ACCategory *)category
-{
-    NSPredicate  *filterByCategory = [NSPredicate predicateWithFormat:@"category.name CONTAINS %@", category.name];
-    NSMutableArray *tasksArrangeByCategory = [[tasks filteredArrayUsingPredicate:filterByCategory] mutableCopy];
-    return tasksArrangeByCategory;
-}
+//+(NSMutableArray *)tasks:(NSMutableArray *)tasks ofCategory:(ACCategory *)category
+//{
+//    NSMutableArray *sortedTasks = tasks;
+//    sortedTasks = [self arrangeTasks:sortedTasks byCategory:category];
+//    sortedTasks = [self arrangeByDueDate:sortedTasks];
+//    sortedTasks = [self arrangeByPriority:sortedTasks];
+//    return sortedTasks;
+//}
+//
+//+(NSMutableArray *)arrangeByPriority:(NSMutableArray *)tasks
+//{
+//    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO]]];
+//    return tasks;
+//}
+//
+//+(NSMutableArray *)arrangeByDueDate:(NSMutableArray *)tasks
+//{
+////    [tasks sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueDate.date" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"dueDate.time" ascending:YES]]];
+//    return tasks;
+//}
+//
+//+(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byDueDateIntoSections:(NSMutableArray *)dates
+//{
+//    NSMutableArray *taskSortedIntoSections = [[NSMutableArray alloc] init];
+//    for (ACDueDate *date in dates)
+//    {
+//        NSPredicate *filterByDatePredicate = [NSPredicate predicateWithFormat:@"dueDate.dateString CONTAINS %@", date.dateString];
+//        [taskSortedIntoSections addObject:[[tasks filteredArrayUsingPredicate:filterByDatePredicate] mutableCopy]];
+//    }
+//    return taskSortedIntoSections;
+//}
+//
+//+(NSMutableArray *)arrangeTasks:(NSMutableArray *)tasks byCategory:(ACCategory *)category
+//{
+//    NSPredicate  *filterByCategory = [NSPredicate predicateWithFormat:@"category.name CONTAINS %@", category.name];
+//    NSMutableArray *tasksArrangeByCategory = [[tasks filteredArrayUsingPredicate:filterByCategory] mutableCopy];
+//    return tasksArrangeByCategory;
+//}
 @end
